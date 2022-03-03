@@ -1,5 +1,5 @@
 # Pengaplikasian Algoritma BFS dan DFS dalam Implementasi Folder Crawling
-Tugas Besar 2 IF2211 Strategi Algoritma Semester II Tahun 2021/2022
+Tugas Besar 2 IF2211 Strategi Algoritma Semester II Tahun 2021/2022 Oleh WhyNotSearch
 
 ## Table of Contents
 * [Author](#author)
@@ -28,7 +28,7 @@ Tugas Besar 2 IF2211 Strategi Algoritma Semester II Tahun 2021/2022
 ## Message
 
 ## Contact
-This program was made by ??
+This program was made by WhyNotSearch
 1. Putri Nurhaliza (13520066).
    email : 13520066@std.stei.itb.ac.id
 2. Febryola Kurnia Putri (13520140).
