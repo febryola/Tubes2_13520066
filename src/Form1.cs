@@ -1,3 +1,5 @@
+using Microsoft.WindowsAPICodePack.Dialogs;
+
 namespace src
 {
     public partial class Form1 : Form
@@ -13,5 +15,14 @@ namespace src
 
         }
 
+        private void buttonChooseFolder_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog openFolder = new CommonOpenFileDialog();
+            openFolder.IsFolderPicker = true;
+            if (openFolder.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                textBoxDir.Text = openFolder.FileName;
+            }
+        }
     }
 }
