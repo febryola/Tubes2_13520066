@@ -1,21 +1,10 @@
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Windows.Forms;
-using System.Threading;
-
 
 namespace src
 {
     public partial class Form1 : Form
     {
+        private Graph graf;
         //create a viewer object 
         Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
         //create a graph object 
@@ -24,9 +13,20 @@ namespace src
         public Form1()
         {
             InitializeComponent();
-        }
-  
+            this.graf = new Graph(null,null);
+            this.graf.onfilefound += filefound;
+            bgworker.DoWork += backgroundWorker1_DoWork;
 
+        }
+        
+        private void filefound(string path)
+        {
+            
+            listBox1.BeginInvoke((Action)delegate ()
+            {
+                listBox1.Items.Add(path);
+            });
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -42,30 +42,67 @@ namespace src
             }
         }
 
-        private void DrawGraph()
+        private void labelOutput_Click(object sender, EventArgs e)
         {
-            // Bind graph to viewer engine
-            viewer.Graph = graph;
-            // Bind viewer engine to the panelGraph
-            panelGraph.SuspendLayout();
-            viewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            panelGraph.Controls.Add(viewer);
-            panelGraph.ResumeLayout();
+
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            //create the graph content 
-            graph.AddEdge("A", "B");
-            graph.AddEdge("B", "C");
-            graph.AddEdge("A", "C").Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
-            graph.FindNode("A").Attr.FillColor = Microsoft.Msagl.Drawing.Color.Magenta;
-            graph.FindNode("B").Attr.FillColor = Microsoft.Msagl.Drawing.Color.MistyRose;
-            Microsoft.Msagl.Drawing.Node c = graph.FindNode("C");
-            c.Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
-            c.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Diamond;
+            this.graf.File = textBoxFilename.Text;
+            this.graf.Dir = textBoxDir.Text;
+            bgworker.RunWorkerAsync();
+            //ubah sesuai bfs dfs (buat testing doang)
+            string x = "Result of BFS";
+            string y = "Result of DFS";
+            if (radioButtonBFS.Checked)
+            {
+                textBox1.Text = x;
+            }
+            else
+            {
+                textBox1.Text = y;
+            }
+        }
 
-            DrawGraph();
+        private void textBoxDir_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelTreeBox_Paint(object sender, PaintEventArgs e)
+        {
+            
+        }
+
+        private void radioButtonBFS_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelOutput_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelHeader_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            graf.search();
         }
     }
 }
