@@ -7,7 +7,7 @@ Tugas Besar 2 IF2211 Strategi Algoritma Semester II Tahun 2021/2022 Oleh WhyNotS
 * [Requirement](#requirement)
 * [Setup](#setup)
 * [Organogram](#organogram)
-* [Message](#message)
+* [Status](#status)
 * [Contact](#contact)
 
 ## Author
@@ -25,8 +25,8 @@ Tugas Besar 2 IF2211 Strategi Algoritma Semester II Tahun 2021/2022 Oleh WhyNotS
 
 ## Organogram
 
-## Message
-
+## Status
+Project is: _ongoing_
 ## Contact
 This program was made by WhyNotSearch
 1. Putri Nurhaliza (13520066).
