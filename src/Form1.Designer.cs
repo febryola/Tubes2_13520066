@@ -42,7 +42,7 @@
             this.panelOutput = new System.Windows.Forms.Panel();
             this.labelTimeSpent = new System.Windows.Forms.Label();
             this.labelPathFile = new System.Windows.Forms.Label();
-            this.panelTreeBox = new System.Windows.Forms.Panel();
+            this.panelGraph = new System.Windows.Forms.Panel();
             this.panelInput = new System.Windows.Forms.Panel();
             this.labelChooseDir = new System.Windows.Forms.Label();
             this.textBoxDir = new System.Windows.Forms.TextBox();
@@ -151,6 +151,7 @@
             this.buttonSearch.Text = "Search";
             this.buttonSearch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonSearch.UseVisualStyleBackColor = false;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // panelHeader
             // 
@@ -168,7 +169,7 @@
             this.panelOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panelOutput.Controls.Add(this.labelTimeSpent);
             this.panelOutput.Controls.Add(this.labelPathFile);
-            this.panelOutput.Controls.Add(this.panelTreeBox);
+            this.panelOutput.Controls.Add(this.panelGraph);
             this.panelOutput.Controls.Add(this.labelOutput);
             this.panelOutput.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelOutput.Location = new System.Drawing.Point(311, 97);
@@ -200,13 +201,13 @@
             this.labelPathFile.TabIndex = 24;
             this.labelPathFile.Text = "Path File:";
             // 
-            // panelTreeBox
+            // panelGraph
             // 
-            this.panelTreeBox.BackColor = System.Drawing.Color.White;
-            this.panelTreeBox.Location = new System.Drawing.Point(22, 68);
-            this.panelTreeBox.Name = "panelTreeBox";
-            this.panelTreeBox.Size = new System.Drawing.Size(593, 317);
-            this.panelTreeBox.TabIndex = 14;
+            this.panelGraph.BackColor = System.Drawing.Color.White;
+            this.panelGraph.Location = new System.Drawing.Point(22, 68);
+            this.panelGraph.Name = "panelGraph";
+            this.panelGraph.Size = new System.Drawing.Size(593, 317);
+            this.panelGraph.TabIndex = 14;
             // 
             // panelInput
             // 
@@ -292,7 +293,7 @@
         private Button buttonSearch;
         private Panel panelHeader;
         private Panel panelOutput;
-        private Panel panelTreeBox;
+        private Panel panelGraph;
         private Label labelPathFile;
         private Label labelTimeSpent;
         private Panel panelInput;
