@@ -68,6 +68,10 @@ namespace src
             {
                 resultBox.Text = y;
             }
+            if (listBox1.Items.Count == 0)
+            {
+                pathBox.Text = "File tidak ditemukan";
+            }
 
             drawGraph(this.graf);
 
@@ -134,6 +138,26 @@ namespace src
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             graf.search();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void labelPathFile_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void resultBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
