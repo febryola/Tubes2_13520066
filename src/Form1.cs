@@ -42,10 +42,6 @@ namespace src
             }
         }
 
-        private void labelOutput_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
@@ -57,22 +53,48 @@ namespace src
             string y = "Result of DFS";
             if (radioButtonBFS.Checked)
             {
-                ResultBox.Text = x;
+                resultBox.Text = x;
             }
             else
             {
-                ResultBox.Text = y;
+                resultBox.Text = y;
             }
+
+            drawGraph(this.graf);
+
+        }
+
+        private void drawGraph(Graph graf)
+        {
+            //TEST nampilin graph, nanti diganti sama graph yang dari graf hasil DFS/BFS
+            //create the graph content 
+            graph.AddEdge("A", "B");
+            graph.AddEdge("B", "C");
+            graph.AddEdge("A", "C").Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
+            graph.FindNode("A").Attr.FillColor = Microsoft.Msagl.Drawing.Color.Magenta;
+            graph.FindNode("B").Attr.FillColor = Microsoft.Msagl.Drawing.Color.MistyRose;
+            Microsoft.Msagl.Drawing.Node c = graph.FindNode("C");
+            c.Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
+            c.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Diamond;
+
+
+            // Bind graph to viewer engine
+            viewer.Graph = graph;
+            // Bind viewer engine to the panelGraph
+            panelGraph.SuspendLayout();
+            viewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            panelGraph.Controls.Add(viewer);
+            panelGraph.ResumeLayout();
+        }
+
+        private void labelOutput_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void textBoxDir_TextChanged(object sender, EventArgs e)
         {
 
-        }
-
-        private void panelTreeBox_Paint(object sender, PaintEventArgs e)
-        {
-            
         }
 
         private void radioButtonBFS_CheckedChanged(object sender, EventArgs e)

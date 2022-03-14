@@ -40,12 +40,10 @@ namespace src
             this.buttonSearch = new System.Windows.Forms.Button();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.panelOutput = new System.Windows.Forms.Panel();
-            this.ResultBox = new System.Windows.Forms.TextBox();
+            this.resultBox = new System.Windows.Forms.TextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.labelTimeSpent = new System.Windows.Forms.Label();
             this.labelPathFile = new System.Windows.Forms.Label();
-            this.panelTreeBox = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panelInput = new System.Windows.Forms.Panel();
             this.labelChooseDir = new System.Windows.Forms.Label();
             this.textBoxDir = new System.Windows.Forms.TextBox();
@@ -53,8 +51,8 @@ namespace src
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.printDialog2 = new System.Windows.Forms.PrintDialog();
             this.bgworker = new System.ComponentModel.BackgroundWorker();
+            this.panelGraph = new System.Windows.Forms.Panel();
             this.panelOutput.SuspendLayout();
-            this.panelTreeBox.SuspendLayout();
             this.panelInput.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -187,11 +185,11 @@ namespace src
             // panelOutput
             // 
             this.panelOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panelOutput.Controls.Add(this.ResultBox);
+            this.panelOutput.Controls.Add(this.panelGraph);
+            this.panelOutput.Controls.Add(this.resultBox);
             this.panelOutput.Controls.Add(this.listBox1);
             this.panelOutput.Controls.Add(this.labelTimeSpent);
             this.panelOutput.Controls.Add(this.labelPathFile);
-            this.panelOutput.Controls.Add(this.panelTreeBox);
             this.panelOutput.Controls.Add(this.labelOutput);
             this.panelOutput.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelOutput.Location = new System.Drawing.Point(311, 98);
@@ -201,16 +199,16 @@ namespace src
             this.panelOutput.TabIndex = 23;
             this.panelOutput.Paint += new System.Windows.Forms.PaintEventHandler(this.panelOutput_Paint);
             // 
-            // ResultBox
+            // resultBox
             // 
-            this.ResultBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ResultBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ResultBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
-            this.ResultBox.ForeColor = System.Drawing.Color.White;
-            this.ResultBox.Location = new System.Drawing.Point(132, 24);
-            this.ResultBox.Name = "ResultBox";
-            this.ResultBox.Size = new System.Drawing.Size(482, 32);
-            this.ResultBox.TabIndex = 27;
+            this.resultBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.resultBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.resultBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
+            this.resultBox.ForeColor = System.Drawing.Color.White;
+            this.resultBox.Location = new System.Drawing.Point(132, 24);
+            this.resultBox.Name = "resultBox";
+            this.resultBox.Size = new System.Drawing.Size(482, 32);
+            this.resultBox.TabIndex = 27;
             // 
             // listBox1
             // 
@@ -247,31 +245,6 @@ namespace src
             this.labelPathFile.Size = new System.Drawing.Size(86, 25);
             this.labelPathFile.TabIndex = 24;
             this.labelPathFile.Text = "Path File:";
-            // 
-            // panelTreeBox
-            // 
-            this.panelTreeBox.BackColor = System.Drawing.Color.White;
-            this.panelTreeBox.Controls.Add(this.textBox1);
-            this.panelTreeBox.Location = new System.Drawing.Point(22, 68);
-            this.panelTreeBox.Margin = new System.Windows.Forms.Padding(2);
-            this.panelTreeBox.Name = "panelTreeBox";
-            this.panelTreeBox.Size = new System.Drawing.Size(592, 318);
-            this.panelTreeBox.TabIndex = 14;
-            this.panelTreeBox.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTreeBox_Paint);
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.textBox1.Location = new System.Drawing.Point(230, 20);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(125, 24);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // panelInput
             // 
@@ -339,6 +312,15 @@ namespace src
             // 
             this.bgworker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
+            // panelGraph
+            // 
+            this.panelGraph.BackColor = System.Drawing.Color.White;
+            this.panelGraph.Location = new System.Drawing.Point(22, 68);
+            this.panelGraph.Margin = new System.Windows.Forms.Padding(2);
+            this.panelGraph.Name = "panelGraph";
+            this.panelGraph.Size = new System.Drawing.Size(592, 318);
+            this.panelGraph.TabIndex = 15;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -357,8 +339,6 @@ namespace src
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelOutput.ResumeLayout(false);
             this.panelOutput.PerformLayout();
-            this.panelTreeBox.ResumeLayout(false);
-            this.panelTreeBox.PerformLayout();
             this.panelInput.ResumeLayout(false);
             this.panelInput.PerformLayout();
             this.ResumeLayout(false);
@@ -377,7 +357,8 @@ namespace src
         private Button buttonSearch;
         private Panel panelHeader;
         private Panel panelOutput;
-        private Panel panelTreeBox;
+        private Panel panelGraph;
+        private TextBox resultBox;
         private Label labelPathFile;
         private Label labelTimeSpent;
         private Panel panelInput;
@@ -386,9 +367,7 @@ namespace src
         private Label labelChooseDir;
         private PrintDialog printDialog1;
         private PrintDialog printDialog2;
-        private TextBox textBox1;
         private System.ComponentModel.BackgroundWorker bgworker;
         private ListBox listBox1;
-        private TextBox ResultBox;
     }
 }
