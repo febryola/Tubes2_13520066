@@ -64,14 +64,14 @@ namespace src
             {
                 resultBox.Text = x;
             }
-            else
+            else if (radioButtonDFS.Checked)
             {
                 resultBox.Text = y;
             }
-            if (listBox1.Items.Count == 0)
+            /*if (listBox1.Items.Count < 1)
             {
                 pathBox.Text = "File tidak ditemukan";
-            }
+            }*/
 
             drawGraph(this.graf);
 
