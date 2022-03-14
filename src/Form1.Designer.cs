@@ -40,6 +40,7 @@ namespace src
             this.buttonSearch = new System.Windows.Forms.Button();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.panelOutput = new System.Windows.Forms.Panel();
+            this.panelGraph = new System.Windows.Forms.Panel();
             this.resultBox = new System.Windows.Forms.TextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.labelTimeSpent = new System.Windows.Forms.Label();
@@ -51,7 +52,7 @@ namespace src
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.printDialog2 = new System.Windows.Forms.PrintDialog();
             this.bgworker = new System.ComponentModel.BackgroundWorker();
-            this.panelGraph = new System.Windows.Forms.Panel();
+            this.buttonRefresh = new System.Windows.Forms.Button();
             this.panelOutput.SuspendLayout();
             this.panelInput.SuspendLayout();
             this.SuspendLayout();
@@ -199,6 +200,15 @@ namespace src
             this.panelOutput.TabIndex = 23;
             this.panelOutput.Paint += new System.Windows.Forms.PaintEventHandler(this.panelOutput_Paint);
             // 
+            // panelGraph
+            // 
+            this.panelGraph.BackColor = System.Drawing.Color.White;
+            this.panelGraph.Location = new System.Drawing.Point(22, 68);
+            this.panelGraph.Margin = new System.Windows.Forms.Padding(2);
+            this.panelGraph.Name = "panelGraph";
+            this.panelGraph.Size = new System.Drawing.Size(592, 318);
+            this.panelGraph.TabIndex = 15;
+            // 
             // resultBox
             // 
             this.resultBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -249,6 +259,7 @@ namespace src
             // panelInput
             // 
             this.panelInput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panelInput.Controls.Add(this.buttonRefresh);
             this.panelInput.Controls.Add(this.labelChooseDir);
             this.panelInput.Controls.Add(this.textBoxDir);
             this.panelInput.Controls.Add(this.buttonChooseFolder);
@@ -312,14 +323,23 @@ namespace src
             // 
             this.bgworker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
-            // panelGraph
+            // buttonRefresh
             // 
-            this.panelGraph.BackColor = System.Drawing.Color.White;
-            this.panelGraph.Location = new System.Drawing.Point(22, 68);
-            this.panelGraph.Margin = new System.Windows.Forms.Padding(2);
-            this.panelGraph.Name = "panelGraph";
-            this.panelGraph.Size = new System.Drawing.Size(592, 318);
-            this.panelGraph.TabIndex = 15;
+            this.buttonRefresh.BackColor = System.Drawing.Color.Transparent;
+            this.buttonRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonRefresh.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonRefresh.ForeColor = System.Drawing.Color.White;
+            this.buttonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonRefresh.Image")));
+            this.buttonRefresh.Location = new System.Drawing.Point(158, 422);
+            this.buttonRefresh.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(38, 34);
+            this.buttonRefresh.TabIndex = 25;
+            this.buttonRefresh.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonRefresh.UseVisualStyleBackColor = false;
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
             // Form1
             // 
@@ -369,5 +389,6 @@ namespace src
         private PrintDialog printDialog2;
         private System.ComponentModel.BackgroundWorker bgworker;
         private ListBox listBox1;
+        private Button buttonRefresh;
     }
 }

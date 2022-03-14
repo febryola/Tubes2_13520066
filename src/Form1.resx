@@ -273,6 +273,18 @@
         2EIAAAAAAICV2EIAAAAAAIB1/O2f/gN0MAPFvp+CmQAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="buttonRefresh.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAXCAYAAAARIY8tAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAFSSURBVEhLrZUBkcIwEEWRgAQkICESkIAEJCABCUg4CUg4
+        CScBB7n/SpZLk902dK4zb6bN/uwvu9uwyzkPkVI6CK6jFzeIiy9x5dkVgQR7cRHfIjuwTnxf7TmXmHHs
+        EhfhVTwr4RLoMGqTQ2oT89aPEvwPOoOoHFv5M9D9rQq0YEzZjB/h6VpeBtzo8gQkTvYSNVpmUrw9NW8D
+        T0zy94TUaN1rqEdCTGPbAJNxCJKfKt0ak4G34RYk52MbHV+YDGhaFwgMRktjhAZR7T/9TkIDt/5biAxO
+        nngLGHC1Bg9PHCE9g0LpGPfZaWsCbzLcRrdI1k7hs46b6N6IJqEYOfsXX86ETEc03/RoNlU8l3VP3/+C
+        smltxjk6qPPaiXt2DUBBr1Sf0J0AsweQiH8nb/MalzYXdAsgMc0b/WLRhcPgLhrayOFGM0lihtYL1hen
+        LOe8+wXVon/moF5K9QAAAABJRU5ErkJggg==
+</value>
+  </data>
   <metadata name="printDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

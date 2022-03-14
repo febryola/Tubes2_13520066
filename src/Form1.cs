@@ -9,7 +9,7 @@ namespace src
         Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
         //create a graph object 
         Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
-
+        
         public Form1()
         {
             InitializeComponent();
@@ -18,7 +18,16 @@ namespace src
             bgworker.DoWork += backgroundWorker1_DoWork;
 
         }
-        
+
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            this.Controls.Clear();
+            this.InitializeComponent();
+            this.graf = new Graph(null, null);
+            this.graf.onfilefound += filefound;
+            bgworker.DoWork += backgroundWorker1_DoWork;
+        }
+
         private void filefound(string path)
         {
             
