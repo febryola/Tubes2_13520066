@@ -55,6 +55,7 @@ namespace src
                 if (_s.Contains(_file))
                 {
                     onfilefound(s);
+                    totalNodes++;
                 }
             }
 
