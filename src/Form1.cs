@@ -57,11 +57,11 @@ namespace src
             string y = "Result of DFS";
             if (radioButtonBFS.Checked)
             {
-                textBox1.Text = x;
+                ResultBox.Text = x;
             }
             else
             {
-                textBox1.Text = y;
+                ResultBox.Text = y;
             }
         }
 
