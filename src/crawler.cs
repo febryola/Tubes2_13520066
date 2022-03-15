@@ -17,6 +17,9 @@ namespace src
         private int totalEdges; // jumlah edges
         private string file;
         private string dir;
+        // graph modeled as adjaceny list
+        // key sebagai vertices, value sebagai neighbors
+        private Dictionary<string, HashSet<string>> AdjacencyList = new Dictionary<string, HashSet<string>>();
 
         public event filefound onfilefound;
         // Constructor
@@ -32,6 +35,8 @@ namespace src
             this.dir = dir;
             this.totalEdges = 0;
             this.totalNodes = 0;
+            this.AdjacencyList = new Dictionary<string, HashSet<string>>();
+            this.addVertex(dir);
 
         }
 
@@ -47,6 +52,8 @@ namespace src
             foreach (string s in allfiles){
                 string _s = s.ToLower();
                 string _file = this.file.ToLower();
+                this.addVertex(s);
+                this.addEdge(Tuple.Create(directory,s));
                 if (Directory.Exists(s) && s != "." && s != "..")
                 {
                     scanning(s);
@@ -59,6 +66,20 @@ namespace src
                 }
             }
 
+        }
+
+        public void addVertex(string vertex)
+        {
+            this.AdjacencyList[vertex] = new HashSet<string>();
+        }
+
+        public void addEdge(Tuple<string, string> edge)
+        {
+             if(this.AdjacencyList.ContainsKey(edge.Item1) && this.AdjacencyList.ContainsKey(edge.Item2))
+            {
+                this.AdjacencyList[edge.Item1].Add(edge.Item2);
+                this.AdjacencyList[edge.Item2].Add(edge.Item1);
+            }
         }
         public void search()
         {
