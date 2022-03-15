@@ -122,5 +122,96 @@ namespace src
             }
 
         }
+
+        public class BFS : Graph
+        {
+            public BFS(Graph graf)
+            {
+                this.AdjacencyList = graf.AdjacencyList;
+                this.totalEdges = graf.totalEdges;
+                this.totalNodes = graf.totalNodes;
+                this.dir = graf.dir;
+                this.file = graf.file;
+                this.search();
+            }
+
+            public string singleSearchBFS(string root, string target)
+            {
+                //string target masih harus dipisah dari dir root
+                Queue<string> searchQueue = new Queue<string>();
+                HashSet<string> visited = new HashSet<string>();
+                string returnPath = " ";
+
+                //first iteration
+                searchQueue.Enqueue(root);
+
+                while(searchQueue.Count != 0)
+                {
+                    string vertex = searchQueue.Dequeue();
+                    if (vertex == target)
+                    {
+                        returnPath = vertex;
+                        break;
+                    }
+                    else if (!visited.Contains(vertex))
+                    {
+                        visited.Add(vertex);
+                        foreach (string neighbor in this.AdjacencyList[vertex])
+                            if (!visited.Contains(neighbor))
+                            {
+                                searchQueue.Enqueue(neighbor);
+                            }
+                    } else { continue; }
+                }
+
+                return returnPath;
+            }
+        }
+
+        public class DFS : Graph
+        {
+            public DFS(Graph graf)
+            {
+                this.AdjacencyList = graf.AdjacencyList;
+                this.totalEdges = graf.totalEdges;
+                this.totalNodes = graf.totalNodes;
+                this.dir = graf.dir;
+                this.file = graf.file;
+                this.search();
+            }
+
+            public string singleSearchDFS(string root, string target)
+            {
+                //string target masih harus dipisah dari dir root
+                Stack<string> searchStack = new Stack<string>();
+                HashSet<string> visited = new HashSet<string>();
+                string returnPath = " ";
+
+                //first iteration
+                searchStack.Push(root);
+
+                while (searchStack.Count != 0)
+                {
+                    string vertex = searchStack.Pop();
+                    if (vertex == target)
+                    {
+                        returnPath = vertex;
+                        break;
+                    }
+                    else if (!visited.Contains(vertex))
+                    {
+                        visited.Add(vertex);
+                        foreach (string neighbor in this.AdjacencyList[vertex])
+                            if (!visited.Contains(neighbor))
+                            {
+                                searchStack.Push(neighbor);
+                            }
+                    }
+                    else { continue; }
+                }
+
+                return returnPath;
+            }
+        }
     }
 }
