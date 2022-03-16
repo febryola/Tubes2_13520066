@@ -27,6 +27,7 @@ namespace src
         {
             this.totalEdges = 0;
             this.totalNodes = 0;
+            this.AdjacencyList = new Dictionary<string, HashSet<string>>();
         }
 
         public Graph(string dir, string file)
@@ -70,7 +71,7 @@ namespace src
 
         public void addVertex(string vertex)
         {
-            this.AdjacencyList[vertex] = new HashSet<string>();
+           this.AdjacencyList.Add(vertex, new HashSet<string>());
         }
 
         public void addEdge(Tuple<string, string> edge)

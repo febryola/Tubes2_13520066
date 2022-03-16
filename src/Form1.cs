@@ -13,7 +13,7 @@ namespace src
         public Form1()
         {
             InitializeComponent();
-            this.graf = new Graph(null,null);
+            this.graf = new Graph(@"D:\", "RiotClientServices.exe");
             this.graf.onfilefound += filefound;
             bgworker.DoWork += backgroundWorker1_DoWork;
 
