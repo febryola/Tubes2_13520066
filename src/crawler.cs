@@ -13,21 +13,20 @@ namespace src
     internal class Graph
     {
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        private int totalNodes; // jumlah nodes
-        private int totalEdges; // jumlah edges
+        private int totalNodes;
+        private int totalEdges;
         private string file;
         private string dir;
-        // graph modeled as adjaceny list
-        // key sebagai vertices, value sebagai neighbors
+        // graph modeled as adjacency list
+        // key : vertices, value : neighbors
         private Dictionary<string, HashSet<string>> AdjacencyList = new Dictionary<string, HashSet<string>>();
 
         public event filefound onfilefound;
-        // Constructor
+        //constructor
         public Graph()
         {
             this.totalEdges = 0;
             this.totalNodes = 0;
-            this.AdjacencyList = new Dictionary<string, HashSet<string>>();
         }
 
         public Graph(string dir, string file)
@@ -38,27 +37,30 @@ namespace src
             this.totalNodes = 0;
             this.AdjacencyList = new Dictionary<string, HashSet<string>>();
             this.addVertex(dir);
-
         }
 
-        private void scanning(string directory)
+        private void scanning(string directory, string lastVertex)
         {
-            string[] files = Directory.GetFiles( directory );
-            string[] dirs = Directory.GetDirectories( directory );
+            string[] files = Directory.GetFiles(directory);
+            string[] dirs = Directory.GetDirectories(directory);
 
             List<string> allfiles = new List<string>();
             allfiles.AddRange(files);
             allfiles.AddRange(dirs);
 
-            foreach (string s in allfiles){
-                string _s = s.ToLower();
+            foreach (string s in allfiles)
+            {
+                string _s = s;
+                _s = _s.Replace(directory, "");
+                _s = _s.Replace("\\", "");
                 string _file = this.file.ToLower();
-                this.addVertex(s);
-                this.addEdge(Tuple.Create(directory,s));
+                this.addVertex(_s);
+                this.addEdge(Tuple.Create(lastVertex,_s));
                 if (Directory.Exists(s) && s != "." && s != "..")
                 {
-                    scanning(s);
+                    scanning(s,_s);
                     totalEdges++;
+
                 }
                 if (_s.Contains(_file))
                 {
@@ -66,12 +68,11 @@ namespace src
                     totalNodes++;
                 }
             }
-
         }
 
         public void addVertex(string vertex)
         {
-           this.AdjacencyList.Add(vertex, new HashSet<string>());
+            this.AdjacencyList[vertex] = new HashSet<string>();
         }
 
         public void addEdge(Tuple<string, string> edge)
@@ -82,20 +83,10 @@ namespace src
                 this.AdjacencyList[edge.Item2].Add(edge.Item1);
             }
         }
+
         public void search()
         {
-            scanning(this.dir);
-        }
-        //getter buat dapetin jumlah edges (garis cabang)
-        public int getEdges()
-        {
-            return this.totalEdges;
-        }
-
-        //getter buat dapetin jumlah simpul
-        public int getNodes()
-        {
-            return this.totalNodes;
+            scanning(this.dir,this.dir);
         }
 
         public string File
@@ -133,36 +124,91 @@ namespace src
                 this.totalNodes = graf.totalNodes;
                 this.dir = graf.dir;
                 this.file = graf.file;
-                this.search();
+                
             }
 
-            public string singleSearchBFS(string root, string target)
+            public BFS(string root, string file)
+            {
+                this.totalEdges = 0;
+                this.totalNodes = 0;
+                this.dir = root;
+                this.file = file;
+                this.AdjacencyList = new Dictionary<string, HashSet<string>>();
+                this.addVertex(dir);
+            }
+
+            public void addKeyPath(string key, string path)
+            {
+                this.predPath[key] = path;
+            }
+            public Queue<string> searchQueue = new Queue<string>();
+            public HashSet<string> visited = new HashSet<string>();
+            public Dictionary<string, string> predPath = new Dictionary<string, string>();
+            public string singleSearchBFS(string directory, string file)
             {
                 //string target masih harus dipisah dari dir root
-                Queue<string> searchQueue = new Queue<string>();
-                HashSet<string> visited = new HashSet<string>();
-                string returnPath = " ";
+
+                addKeyPath(directory, "");
+                string returnPath = directory;
+                string lastVertex= directory;
+                this.file = file;
 
                 //first iteration
-                searchQueue.Enqueue(root);
+                searchQueue.Enqueue(directory);
 
                 while(searchQueue.Count != 0)
                 {
                     string vertex = searchQueue.Dequeue();
-                    if (vertex == target)
+                    string _vertex = " ";
+                    if (string.Equals(vertex, directory))
                     {
-                        returnPath = vertex;
-                        break;
+                        _vertex = directory;
+                    } else
+                    {
+                        _vertex = vertex.Replace(predPath[vertex], "");
+                        _vertex = _vertex.Replace("\\", "");
                     }
-                    else if (!visited.Contains(vertex))
+                    string[] files = Directory.GetFiles(vertex);
+                    string[] dirs = Directory.GetDirectories(vertex);
+                    List<string> allfiles = new List<string>();
+                    allfiles.AddRange(files);
+                    allfiles.AddRange(dirs);
+                    foreach (string s in allfiles)
                     {
-                        visited.Add(vertex);
-                        foreach (string neighbor in this.AdjacencyList[vertex])
-                            if (!visited.Contains(neighbor))
+                        predPath.Add(s,vertex);
+                        string _s = s;
+                        _s = _s.Replace(vertex, "");
+                        _s = _s.Replace("\\", "");
+                        if (!visited.Contains(s))
+                        {
+                            visited.Add(s);
+                            
+                            this.addVertex(_s);
+                            if (string.Equals(vertex, directory))
                             {
-                                searchQueue.Enqueue(neighbor);
+                                this.addEdge(Tuple.Create(vertex, _s));
                             }
-                    } else { continue; }
+                            else
+                            {
+                                this.addEdge(Tuple.Create(_vertex, _s));
+                            }
+                            
+                            totalEdges++; totalNodes++;
+                            
+                            if (Directory.Exists(s) && s != "." && s != "..")
+                            {
+                                searchQueue.Enqueue(s);
+                            }
+                            if (_s.Contains(file))
+                            {
+                                return s;
+                            
+                            }
+                        }
+                        else { continue; }
+                        
+                    }
+                    
                 }
 
                 return returnPath;
@@ -186,7 +232,7 @@ namespace src
                 //string target masih harus dipisah dari dir root
                 Stack<string> searchStack = new Stack<string>();
                 HashSet<string> visited = new HashSet<string>();
-                string returnPath = " ";
+                string returnPath = root;
 
                 //first iteration
                 searchStack.Push(root);
