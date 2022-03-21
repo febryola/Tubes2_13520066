@@ -12,6 +12,10 @@ namespace src
     delegate void filefound(string path);
     internal class Graph
     {
+        private Microsoft.Msagl.Drawing.Graph graphVisualizer; // graph msagl
+        private Microsoft.Msagl.GraphViewerGdi.GViewer viewer; // viewer graph msagl
+        private Panel panelGraph; // panel untuk viewer di gui
+
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         private int totalNodes;
         private int totalEdges;
@@ -117,14 +121,16 @@ namespace src
 
         public class BFS : Graph
         {
-            public BFS(Graph graf)
+            public BFS(Graph graf, ref Microsoft.Msagl.Drawing.Graph graphVisualizer, ref Panel panelGraph, ref Microsoft.Msagl.GraphViewerGdi.GViewer viewer)
             {
                 this.AdjacencyList = graf.AdjacencyList;
                 this.totalEdges = graf.totalEdges;
                 this.totalNodes = graf.totalNodes;
                 this.dir = graf.dir;
                 this.file = graf.file;
-                
+                this.graphVisualizer = graphVisualizer;
+                this.viewer = viewer;
+                this.panelGraph = panelGraph;
             }
 
             public BFS(string root, string file)
@@ -325,13 +331,16 @@ namespace src
 
         public class DFS : Graph
         {
-            public DFS(Graph graf)
+            public DFS(Graph graf, ref Microsoft.Msagl.Drawing.Graph graphVisualizer, ref Panel panelGraph, ref Microsoft.Msagl.GraphViewerGdi.GViewer viewer)
             {
                 this.AdjacencyList = graf.AdjacencyList;
                 this.totalEdges = graf.totalEdges;
                 this.totalNodes = graf.totalNodes;
                 this.dir = graf.dir;
                 this.file = graf.file;
+                this.graphVisualizer = graphVisualizer;
+                this.viewer = viewer;
+                this.panelGraph = panelGraph;
             }
 
             public DFS(string root, string file)

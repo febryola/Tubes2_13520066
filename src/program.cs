@@ -13,10 +13,6 @@ namespace src
            
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
-            Graph graf = new Graph(@"D:\", "Resume.pdf");
-            graf.search();
-
-
         }
     }  
 }

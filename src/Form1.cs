@@ -5,17 +5,15 @@ namespace src
     public partial class Form1 : Form
     {
         private Graph graf;
-        //create a viewer object 
+        Microsoft.Msagl.Drawing.Graph graph; // The graph that MSAGL accepts
         Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
-        //create a graph object 
-        Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
-        
+
         public Form1()
         {
             InitializeComponent();
             this.graf = new Graph(@"D:\", "RiotClientServices.exe");
             this.graf.onfilefound += filefound;
-            bgworker.DoWork += backgroundWorker1_DoWork;
+            // bgworker.DoWork += backgroundWorker1_DoWork;
 
         }
 
@@ -25,16 +23,17 @@ namespace src
             this.InitializeComponent();
             this.graf = new Graph(null, null);
             this.graf.onfilefound += filefound;
-            bgworker.DoWork += backgroundWorker1_DoWork;
+            // bgworker.DoWork += backgroundWorker1_DoWork;
         }
 
         private void filefound(string path)
         {
-            
+            /*   
             listBox1.BeginInvoke((Action)delegate ()
             {
                 listBox1.Items.Add(path);
             });
+            */
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -57,23 +56,47 @@ namespace src
             this.graf.File = textBoxFilename.Text;
             this.graf.Dir = textBoxDir.Text;
             bgworker.RunWorkerAsync();
-            //ubah sesuai bfs dfs (buat testing doang)
-            string x = "Result of BFS";
-            string y = "Result of DFS";
             if (radioButtonBFS.Checked)
             {
-                resultBox.Text = x;
+                resultBox.Text = "Result of BFS";
+                if (!checkBoxAllOcc.Checked)
+                {
+                    Graph.BFS bfs = new Graph.BFS(this.graf, ref graph, ref panelGraph, ref viewer);
+                    string resultpath = bfs.singleSearchBFS(this.graf.Dir, this.graf.File);
+                    listBox1.Items.Add(resultpath);
+                }
+                /*
+                else
+                {
+                    Graph.BFS bfs = new Graph.BFS(this.graf, ref graph, ref panelGraph, ref viewer);
+                    List<string> resultpaths = bfs.multipleSearchBFS(textBoxDir.Text, textBoxFilename.Text);
+                }
+                */
+
             }
             else if (radioButtonDFS.Checked)
             {
-                resultBox.Text = y;
+                if (!checkBoxAllOcc.Checked)
+                {
+                    resultBox.Text = "Result of DFS";
+                    Graph.DFS dfs = new Graph.DFS(this.graf, ref graph, ref panelGraph, ref viewer);
+                    string resultpath = dfs.singleSearchDFS(this.graf.Dir, this.graf.File);
+                    listBox1.Items.Add(resultpath);
+                }
+                /*
+                else
+                {
+
+                }
+                */
             }
-            /*if (listBox1.Items.Count < 1)
+            /*
+            if (listBox1.Items.Count < 1)
             {
                 pathBox.Text = "File tidak ditemukan";
-            }*/
-
-            drawGraph(this.graf);
+            }
+            */
+            //drawGraph(this.graf);
 
         }
 
@@ -156,6 +179,11 @@ namespace src
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxAllOcc_CheckedChanged(object sender, EventArgs e)
         {
 
         }
