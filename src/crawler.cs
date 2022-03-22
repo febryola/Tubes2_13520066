@@ -211,6 +211,13 @@ namespace src
                     {
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
+                        if (string.Equals(_vertex,file))
+                            {
+                                this.getPath(directory, vertex);
+                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                                return vertex;
+                            
+                            }
                         this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
                     }
                     string[] files = Directory.GetFiles(vertex);
@@ -245,17 +252,10 @@ namespace src
                             
                             totalEdges++; totalNodes++;
                             
-                            if (Directory.Exists(s) && s != "." && s != "..")
-                            {
-                                searchQueue.Enqueue(s);
-                            }
-                            if (string.Equals(_s,file))
-                            {
-                                this.getPath(directory, s);
-                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
-                                return s;
                             
-                            }
+                            searchQueue.Enqueue(s);
+                            
+                            
                         }
                         else { continue; }
                         
@@ -291,7 +291,14 @@ namespace src
                     {
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
-                        this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
+                        if (string.Equals(_vertex,file))
+                        {
+                                this.getMultiplePath(directory, vertex);
+                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                                returnPath.Add(vertex);
+                        } else {
+                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
+                        }
                     }
                     string[] files = Directory.GetFiles(vertex);
                     string[] dirs = Directory.GetDirectories(vertex);
@@ -347,17 +354,8 @@ namespace src
 
                             totalEdges++; totalNodes++;
 
-                            if (Directory.Exists(s) && s != "." && s != "..")
-                            {
-                                searchQueue.Enqueue(s);
-                            }
-                            if (string.Equals(_s,file))
-                            {
-                                this.getMultiplePath(directory, s);
-                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
-                                returnPath.Add(s);
-
-                            }
+                            
+                            searchQueue.Enqueue(s);
                         }
                         else { continue; }
 
@@ -455,6 +453,13 @@ namespace src
                     {
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
+                        if (string.Equals(_vertex,file))
+                            {
+                                this.getPath(directory, vertex);
+                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                                return vertex;
+                            
+                            }
                         this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
                     }
                     string[] files = Directory.GetFiles(vertex);
@@ -488,24 +493,7 @@ namespace src
                             }
 
                             totalEdges++; totalNodes++;
-
-                            if (Directory.Exists(s) && s != "." && s != "..")
-                            {
-                                searchStack.Push(s);
-
-                            } else if (!Directory.Exists(s))
-                            {
-                                visited.Add(s);
-                                visitedVertex.Add(_s);
-                            }
-
-                            if (string.Equals(_s,file))
-                            {
-                                this.getPath(directory, s);
-                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
-                                return s;
-
-                            }
+                            searchStack.Push(s);
                         }
                         else { continue; }
 
@@ -538,8 +526,14 @@ namespace src
                     {
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
-
-                        this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
+                        if (string.Equals(_vertex,file))
+                        {
+                                this.getMultiplePath(directory, vertex);
+                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                                returnPath.Add(vertex);
+                        } else {
+                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
+                        }
                     }
                     string[] files = Directory.GetFiles(vertex);
                     string[] dirs = Directory.GetDirectories(vertex);
@@ -611,23 +605,9 @@ namespace src
 
                             totalEdges++; totalNodes++;
 
-                            if (Directory.Exists(s) && s != "." && s != "..")
-                            {
-                                searchStack.Push(s);
-                            }
-                            else if (!Directory.Exists(s))
-                            {
-                                visited.Add(s);
-                                visitedVertex.Add(_s);
-                            }
-
-                            if (string.Equals(_s,file))
-                            {
-                                this.getMultiplePath(directory, s);
-                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
-                                returnPath.Add(s);
-
-                            }
+                            
+                            searchStack.Push(s);
+                
                         }
                         else { continue; }
                     }
