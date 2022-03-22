@@ -53,12 +53,13 @@ namespace src
         }
 
 
-        private void buttonSearch_Click(object sender, EventArgs e)
+                private void buttonSearch_Click(object sender, EventArgs e)
         {
             this.graf.File = textBoxFilename.Text;
             this.graf.Dir = textBoxDir.Text;
-            string notFound = "File tidak ditemukan";
             bgworker.RunWorkerAsync();
+            string notFound = "File tidak ditemukan";
+
             if (radioButtonBFS.Checked)
             {
                 resultBox.Text = "Result of BFS";
@@ -66,21 +67,36 @@ namespace src
                 if (!checkBoxAllOcc.Checked)
                 {
                     string resultpath = bfs.singleSearchBFS(this.graf.Dir, this.graf.File);
-                    if (resultpath == this.graf.Dir)
+                    if(resultpath != this.graf.Dir)
                     {
-                        listBox1.Items.Add(notFound);
+                        LinkLabel link = new LinkLabel();
+                        link.Text = resultpath;
+                        link.AutoSize = true;
+                        this.richTextBox1.Controls.Add(link);
+                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+
                     }
                     else
                     {
-                        listBox1.Items.Add(resultpath);
+                        LinkLabel s = new LinkLabel();
+                        s.Text = notFound;
+                        s.AutoSize = true;
+                        this.richTextBox1.Controls.Add(s);
+                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
                     }
+                    
                 }
                 else
                 {
                     List<string> resultpaths = bfs.multipleSearchBFS(textBoxDir.Text, textBoxFilename.Text);
-                    foreach(string path in resultpaths)
+                    foreach (string path in resultpaths)
                     {
-                        listBox1.Items.Add(path);
+                        LinkLabel link = new LinkLabel();
+                        link.Text = path;
+                        link.AutoSize = true;
+                        this.richTextBox1.Controls.Add(link);
+                        this.richTextBox1.AppendText("\n");
+                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
                     }
                 }
 
@@ -89,17 +105,24 @@ namespace src
             {
                 resultBox.Text = "Result of DFS";
                 Graph.DFS dfs = new Graph.DFS(this.graf);
-
                 if (!checkBoxAllOcc.Checked)
                 {
                     string resultpath = dfs.singleSearchDFS(this.graf.Dir, this.graf.File);
-                    if (resultpath == this.graf.Dir)
+                    if (resultpath != this.graf.Dir)
                     {
-                        listBox1.Items.Add(notFound);
+                        LinkLabel link = new LinkLabel();
+                        link.Text = resultpath;
+                        link.AutoSize = true;
+                        this.richTextBox1.Controls.Add(link);
+                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
                     }
                     else
                     {
-                        listBox1.Items.Add(resultpath);
+                        LinkLabel s = new LinkLabel();
+                        s.Text = notFound;
+                        s.AutoSize = true;
+                        this.richTextBox1.Controls.Add(s);
+                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
                     }
                 }
                 else
@@ -107,19 +130,16 @@ namespace src
                     List<string> resultpaths = dfs.multipleSearchDFS(textBoxDir.Text, textBoxFilename.Text);
                     foreach (string path in resultpaths)
                     {
-                        listBox1.Items.Add(path);
-
+                        LinkLabel link = new LinkLabel();
+                        link.Text = path;
+                        link.AutoSize = true;
+                        this.richTextBox1.Controls.Add(link);
+                        this.richTextBox1.AppendText("\n");
+                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
                     }
-
                 }
 
             }
-            /*
-            if (listBox1.Items.Count < 1)
-            {
-                pathBox.Text = "File tidak ditemukan";
-            }
-            */
             drawGraph(this.graf);
 
         }
