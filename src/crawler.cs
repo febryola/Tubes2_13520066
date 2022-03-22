@@ -24,6 +24,7 @@ namespace src
         // graph modeled as adjacency list
         // key : vertices, value : neighbors
         private Dictionary<string, HashSet<string>> AdjacencyList = new Dictionary<string, HashSet<string>>();
+        private List<Tuple<string, string>> ParentAndChildren = new List<Tuple<string, string>>();
 
         public event filefound onfilefound;
         //constructor
@@ -41,6 +42,15 @@ namespace src
             this.totalNodes = 0;
             this.AdjacencyList = new Dictionary<string, HashSet<string>>();
             this.addVertex(dir);
+        }
+        public Dictionary<string, HashSet<string>> getAdjacencyList()
+        {
+            return this.AdjacencyList;
+        }
+
+        public List<Tuple<string, string>> getParentAndChildren()
+        {
+            return this.ParentAndChildren;
         }
 
         private void scanning(string directory, string lastVertex)
@@ -81,10 +91,11 @@ namespace src
 
         public void addEdge(Tuple<string, string> edge)
         {
-             if(this.AdjacencyList.ContainsKey(edge.Item1) && this.AdjacencyList.ContainsKey(edge.Item2))
+            if(this.AdjacencyList.ContainsKey(edge.Item1) && this.AdjacencyList.ContainsKey(edge.Item2))
             {
                 this.AdjacencyList[edge.Item1].Add(edge.Item2);
                 this.AdjacencyList[edge.Item2].Add(edge.Item1);
+
             }
         }
 
@@ -131,6 +142,7 @@ namespace src
                 this.graphVisualizer = graphVisualizer;
                 this.viewer = viewer;
                 this.panelGraph = panelGraph;
+                this.ParentAndChildren = graf.ParentAndChildren;
             }
 
             public BFS(string root, string file)
@@ -206,6 +218,7 @@ namespace src
                     {
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
+                        this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
                     }
                     string[] files = Directory.GetFiles(vertex);
                     string[] dirs = Directory.GetDirectories(vertex);
@@ -219,19 +232,22 @@ namespace src
                         _s = _s.Replace(vertex, "");
                         _s = _s.Replace("\\", "");
                         predVertex.Add(_s, _vertex);
+
                         if (!visited.Contains(s))
                         {
                             visited.Add(s);
                             visitedVertex.Add(_s);
-                            
+
                             this.addVertex(_s);
                             if (string.Equals(vertex, directory))
                             {
                                 this.addEdge(Tuple.Create(vertex, _s));
+                                this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
                             }
                             else
                             {
                                 this.addEdge(Tuple.Create(_vertex, _s));
+                                this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
                             }
                             
                             totalEdges++; totalNodes++;
@@ -281,6 +297,7 @@ namespace src
                     {
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
+                        this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
                     }
                     string[] files = Directory.GetFiles(vertex);
                     string[] dirs = Directory.GetDirectories(vertex);
@@ -365,6 +382,7 @@ namespace src
                 this.graphVisualizer = graphVisualizer;
                 this.viewer = viewer;
                 this.panelGraph = panelGraph;
+                this.ParentAndChildren = graf.ParentAndChildren;
             }
 
             public DFS(string root, string file)
@@ -441,6 +459,7 @@ namespace src
                     {
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
+                        this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
                     }
                     string[] files = Directory.GetFiles(vertex);
                     string[] dirs = Directory.GetDirectories(vertex);
@@ -464,10 +483,12 @@ namespace src
                             if (string.Equals(vertex, directory))
                             {
                                 this.addEdge(Tuple.Create(vertex, _s));
+                                this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
                             }
                             else
                             {
                                 this.addEdge(Tuple.Create(_vertex, _s));
+                                this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
                             }
 
                             totalEdges++; totalNodes++;
@@ -475,6 +496,7 @@ namespace src
                             if (Directory.Exists(s) && s != "." && s != "..")
                             {
                                 searchStack.Push(s);
+
                             } else if (!Directory.Exists(s))
                             {
                                 visited.Add(s);
@@ -519,6 +541,8 @@ namespace src
                     {
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
+
+                        this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
                     }
                     string[] files = Directory.GetFiles(vertex);
                     string[] dirs = Directory.GetDirectories(vertex);
