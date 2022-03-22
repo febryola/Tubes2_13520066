@@ -325,10 +325,12 @@ namespace src
                                 if (string.Equals(vertex, directory))
                                 {
                                     this.addEdge(Tuple.Create(vertex, newName));
+                                    this.ParentAndChildren.Add(Tuple.Create(vertex, newName));
                                 }
                                 else
                                 {
                                     this.addEdge(Tuple.Create(_vertex, newName));
+                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, newName));
                                 }
                             }
                             else
@@ -340,10 +342,12 @@ namespace src
                                 if (string.Equals(vertex, directory))
                                 {
                                     this.addEdge(Tuple.Create(vertex, _s));
+                                    this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
                                 }
                                 else
                                 {
                                     this.addEdge(Tuple.Create(_vertex, _s));
+                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
                                 }
                             }
 
@@ -576,10 +580,12 @@ namespace src
                                 if (string.Equals(vertex, directory))
                                 {
                                     this.addEdge(Tuple.Create(vertex, newName));
+                                    this.ParentAndChildren.Add(Tuple.Create(vertex, newName));
                                 }
                                 else
                                 {
                                     this.addEdge(Tuple.Create(_vertex, newName));
+                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, newName));
                                 }
                             }
                             else
@@ -590,20 +596,24 @@ namespace src
                                 if (string.Equals(vertex, directory))
                                 {
                                     this.addEdge(Tuple.Create(vertex, _s));
+                                    this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
                                 }
                                 else
                                 {
                                     this.addEdge(Tuple.Create(_vertex, _s));
+                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
                                 }
                             }
                            
                             if (string.Equals(vertex, directory))
                             {
                                 this.addEdge(Tuple.Create(vertex, _s));
+                                this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
                             }
                             else
                             {
                                 this.addEdge(Tuple.Create(_vertex, _s));
+                                this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
                             }
 
                             totalEdges++; totalNodes++;

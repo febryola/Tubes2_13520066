@@ -108,22 +108,27 @@ namespace src
 
         private void drawGraph(Graph graf)
         {
-            List<Tuple<string, string>> newvisited = new List<Tuple<string, string>>();
+            List<Tuple<string, string>> newAdjlist= new List<Tuple<string, string>>();
+            List<Tuple<string, string>> newVisited = new List<Tuple<string, string>>();
             graph = new Microsoft.Msagl.Drawing.Graph("graph");
             List<Tuple<string, string>> ParentAndChildren = graf.getParentAndChildren();
             foreach (Tuple<string, string> parentChild in ParentAndChildren)
             {
                 string parent = parentChild.Item1;
                 string child = parentChild.Item2;
-                if (!newvisited.Contains(Tuple.Create(parent, child)))
+                if (!newAdjlist.Contains(Tuple.Create(parent, child)))
                 {
                     graph.AddEdge(parent, child);
-                    newvisited.Add(Tuple.Create(parent, child));
+                    newAdjlist.Add(Tuple.Create(parent, child));
                 }
                 else
                 {
-                    // graph.RemoveEdge(parent, child);
-                    graph.AddEdge(parent, child).Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                    Microsoft.Msagl.Drawing.Node ch = graph.FindNode(child);
+                    foreach (Microsoft.Msagl.Drawing.Edge e in ch.InEdges)
+                    {
+                        e.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                    }
+                    newVisited.Add(Tuple.Create(parent, child));
 
                 }
 
@@ -224,7 +229,6 @@ namespace src
             var timer1 = new System.Windows.Forms.Timer();
             if (milliseconds == 0 || milliseconds < 0) return;
 
-            Console.WriteLine("start wait timer");
             timer1.Interval = milliseconds;
             timer1.Enabled = true;
             timer1.Start();
@@ -233,7 +237,6 @@ namespace src
             {
                 timer1.Enabled = false;
                 timer1.Stop();
-                Console.WriteLine("stop wait timer");
             };
 
             while (timer1.Enabled)
