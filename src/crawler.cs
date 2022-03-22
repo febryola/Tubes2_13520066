@@ -249,7 +249,7 @@ namespace src
                             {
                                 searchQueue.Enqueue(s);
                             }
-                            if (string.Equals(_s, directory))
+                            if (string.Equals(_s,file))
                             {
                                 this.getPath(directory, s);
                                 this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
@@ -351,7 +351,7 @@ namespace src
                             {
                                 searchQueue.Enqueue(s);
                             }
-                            if (string.Equals(_s, directory))
+                            if (string.Equals(_s,file))
                             {
                                 this.getMultiplePath(directory, s);
                                 this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
@@ -499,7 +499,7 @@ namespace src
                                 visitedVertex.Add(_s);
                             }
 
-                            if (string.Equals(_s, directory))
+                            if (string.Equals(_s,file))
                             {
                                 this.getPath(directory, s);
                                 this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
@@ -621,7 +621,7 @@ namespace src
                                 visitedVertex.Add(_s);
                             }
 
-                            if (string.Equals(_s, directory))
+                            if (string.Equals(_s,file))
                             {
                                 this.getMultiplePath(directory, s);
                                 this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
