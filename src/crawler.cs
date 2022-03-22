@@ -12,10 +12,6 @@ namespace src
     delegate void filefound(string path);
     internal class Graph
     {
-        private Microsoft.Msagl.Drawing.Graph graphVisualizer; // graph msagl
-        private Microsoft.Msagl.GraphViewerGdi.GViewer viewer; // viewer graph msagl
-        private Panel panelGraph; // panel untuk viewer di gui
-
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         private int totalNodes;
         private int totalEdges;
@@ -132,16 +128,13 @@ namespace src
 
         public class BFS : Graph
         {
-            public BFS(Graph graf, ref Microsoft.Msagl.Drawing.Graph graphVisualizer, ref Panel panelGraph, ref Microsoft.Msagl.GraphViewerGdi.GViewer viewer)
+            public BFS(Graph graf)
             {
                 this.AdjacencyList = graf.AdjacencyList;
                 this.totalEdges = graf.totalEdges;
                 this.totalNodes = graf.totalNodes;
                 this.dir = graf.dir;
                 this.file = graf.file;
-                this.graphVisualizer = graphVisualizer;
-                this.viewer = viewer;
-                this.panelGraph = panelGraph;
                 this.ParentAndChildren = graf.ParentAndChildren;
             }
 
@@ -259,6 +252,7 @@ namespace src
                             if (_s.Contains(file))
                             {
                                 this.getPath(directory, s);
+                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
                                 return s;
                             
                             }
@@ -360,6 +354,7 @@ namespace src
                             if (_s.Contains(file))
                             {
                                 this.getMultiplePath(directory, s);
+                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
                                 returnPath.Add(s);
 
                             }
@@ -376,16 +371,13 @@ namespace src
 
         public class DFS : Graph
         {
-            public DFS(Graph graf, ref Microsoft.Msagl.Drawing.Graph graphVisualizer, ref Panel panelGraph, ref Microsoft.Msagl.GraphViewerGdi.GViewer viewer)
+            public DFS(Graph graf)
             {
                 this.AdjacencyList = graf.AdjacencyList;
                 this.totalEdges = graf.totalEdges;
                 this.totalNodes = graf.totalNodes;
                 this.dir = graf.dir;
                 this.file = graf.file;
-                this.graphVisualizer = graphVisualizer;
-                this.viewer = viewer;
-                this.panelGraph = panelGraph;
                 this.ParentAndChildren = graf.ParentAndChildren;
             }
 
@@ -510,6 +502,7 @@ namespace src
                             if (_s.Contains(file))
                             {
                                 this.getPath(directory, s);
+                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
                                 return s;
 
                             }
@@ -631,6 +624,7 @@ namespace src
                             if (_s.Contains(file))
                             {
                                 this.getMultiplePath(directory, s);
+                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_s], _s));   // ini result
                                 returnPath.Add(s);
 
                             }

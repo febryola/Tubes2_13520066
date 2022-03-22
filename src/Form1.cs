@@ -1,4 +1,6 @@
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
+using System.IO;
 
 namespace src
 {
@@ -59,15 +61,14 @@ namespace src
             if (radioButtonBFS.Checked)
             {
                 resultBox.Text = "Result of BFS";
+                Graph.BFS bfs = new Graph.BFS(this.graf);
                 if (!checkBoxAllOcc.Checked)
                 {
-                    Graph.BFS bfs = new Graph.BFS(this.graf, ref graph, ref panelGraph, ref viewer);
                     string resultpath = bfs.singleSearchBFS(this.graf.Dir, this.graf.File);
                     listBox1.Items.Add(resultpath);
                 }
                 else
                 {
-                    Graph.BFS bfs = new Graph.BFS(this.graf, ref graph, ref panelGraph, ref viewer);
                     List<string> resultpaths = bfs.multipleSearchBFS(textBoxDir.Text, textBoxFilename.Text);
                     foreach(string path in resultpaths)
                     {
@@ -78,17 +79,16 @@ namespace src
             }
             else if (radioButtonDFS.Checked)
             {
+                resultBox.Text = "Result of DFS";
+                Graph.DFS dfs = new Graph.DFS(this.graf);
                 if (!checkBoxAllOcc.Checked)
                 {
-                    resultBox.Text = "Result of DFS";
-                    Graph.DFS dfs = new Graph.DFS(this.graf, ref graph, ref panelGraph, ref viewer);
                     string resultpath = dfs.singleSearchDFS(this.graf.Dir, this.graf.File);
                     listBox1.Items.Add(resultpath);
                 }
                 else
                 {
-                    Graph.BFS bfs = new Graph.BFS(this.graf, ref graph, ref panelGraph, ref viewer);
-                    List<string> resultpaths = bfs.multipleSearchBFS(textBoxDir.Text, textBoxFilename.Text);
+                    List<string> resultpaths = dfs.multipleSearchDFS(textBoxDir.Text, textBoxFilename.Text);
                     foreach (string path in resultpaths)
                     {
                         listBox1.Items.Add(path);
@@ -116,12 +116,14 @@ namespace src
             {
                 string parent = parentChild.Item1;
                 string child = parentChild.Item2;
+                // membangkitkan
                 if (!newAdjlist.Contains(Tuple.Create(parent, child)))
                 {
                     graph.AddEdge(parent, child);
                     newAdjlist.Add(Tuple.Create(parent, child));
                 }
-                else
+                // memeriksa
+                else if (!newVisited.Contains(Tuple.Create(parent, child)))
                 {
                     Microsoft.Msagl.Drawing.Node ch = graph.FindNode(child);
                     foreach (Microsoft.Msagl.Drawing.Edge e in ch.InEdges)
@@ -129,6 +131,22 @@ namespace src
                         e.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
                     }
                     newVisited.Add(Tuple.Create(parent, child));
+
+                }
+                // hasil
+                else
+                {
+                    Microsoft.Msagl.Drawing.Node ch = graph.FindNode(child);
+                    Microsoft.Msagl.Drawing.Node root = graph.FindNode(parent);
+
+                    while (ch != root)
+                    {
+                        foreach (Microsoft.Msagl.Drawing.Edge e in ch.InEdges)
+                        {
+                            e.Attr.Color = Microsoft.Msagl.Drawing.Color.Blue;
+                            ch = e.SourceNode;
+                        }
+                    }
 
                 }
 
