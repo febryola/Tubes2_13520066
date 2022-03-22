@@ -57,6 +57,7 @@ namespace src
         {
             this.graf.File = textBoxFilename.Text;
             this.graf.Dir = textBoxDir.Text;
+            string notFound = "File tidak ditemukan";
             bgworker.RunWorkerAsync();
             if (radioButtonBFS.Checked)
             {
@@ -65,7 +66,14 @@ namespace src
                 if (!checkBoxAllOcc.Checked)
                 {
                     string resultpath = bfs.singleSearchBFS(this.graf.Dir, this.graf.File);
-                    listBox1.Items.Add(resultpath);
+                    if (resultpath == this.graf.Dir)
+                    {
+                        listBox1.Items.Add(notFound);
+                    }
+                    else
+                    {
+                        listBox1.Items.Add(resultpath);
+                    }
                 }
                 else
                 {
@@ -81,10 +89,18 @@ namespace src
             {
                 resultBox.Text = "Result of DFS";
                 Graph.DFS dfs = new Graph.DFS(this.graf);
+
                 if (!checkBoxAllOcc.Checked)
                 {
                     string resultpath = dfs.singleSearchDFS(this.graf.Dir, this.graf.File);
-                    listBox1.Items.Add(resultpath);
+                    if (resultpath == this.graf.Dir)
+                    {
+                        listBox1.Items.Add(notFound);
+                    }
+                    else
+                    {
+                        listBox1.Items.Add(resultpath);
+                    }
                 }
                 else
                 {
@@ -92,9 +108,11 @@ namespace src
                     foreach (string path in resultpaths)
                     {
                         listBox1.Items.Add(path);
+
                     }
+
                 }
-                
+
             }
             /*
             if (listBox1.Items.Count < 1)
