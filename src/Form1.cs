@@ -140,10 +140,6 @@ namespace src
 
         }
 
-        private void Link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
         private void drawGraph(Graph graf)
         {
@@ -251,12 +247,58 @@ namespace src
             link.LinkClicked += Link_LinkClicked1;
         }
 
-
-
         private void Link_LinkClicked1(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe", @"E:\TEST");
-        }
+            if (radioButtonBFS.Checked)
+            {
+                Graph.BFS bfs = new Graph.BFS(this.graf);
+                if (!checkBoxAllOcc.Checked)
+                {
+                    string resultpath = bfs.singleSearchBFS(this.graf.Dir, this.graf.File);
+                    if (resultpath != this.graf.Dir)
+                    {
+                        string folder = Path.GetDirectoryName(resultpath);
+                        System.Diagnostics.Process.Start("explorer.exe", folder);
 
+                    }
+                }
+                else
+                {
+                    List<string> resultpaths = bfs.multipleSearchBFS(textBoxDir.Text, textBoxFilename.Text);
+                    foreach (string path in resultpaths)
+                    {
+                        string folder = Path.GetDirectoryName(path);
+                        System.Diagnostics.Process.Start("explorer.exe", folder);
+                    }
+                   
+                }
+            }
+            else if (radioButtonDFS.Checked)
+            {
+                Graph.DFS dfs = new Graph.DFS(this.graf);
+                if (!checkBoxAllOcc.Checked)
+                {
+                    string resultpath = dfs.singleSearchDFS(this.graf.Dir, this.graf.File);
+                    if (resultpath != this.graf.Dir)
+                    {
+                        string folder = Path.GetDirectoryName(resultpath);
+                        System.Diagnostics.Process.Start("explorer.exe", folder);
+
+                    }
+                }
+                else
+                {
+                    List<string> resultpaths = dfs.multipleSearchDFS(textBoxDir.Text, textBoxFilename.Text);
+                    foreach (string path in resultpaths)
+                    {
+                        string folder = Path.GetDirectoryName(path);
+                        System.Diagnostics.Process.Start("explorer.exe", folder);
+                    }
+                    
+
+                }
+            }
+            
+        }
     }
 }
