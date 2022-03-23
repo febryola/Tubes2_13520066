@@ -91,7 +91,6 @@ namespace src
             {
                 this.AdjacencyList[edge.Item1].Add(edge.Item2);
                 this.AdjacencyList[edge.Item2].Add(edge.Item1);
-
             }
         }
 
@@ -99,6 +98,7 @@ namespace src
         {
             scanning(this.dir, this.dir);
         }
+
 
         public string File
         {
@@ -189,7 +189,6 @@ namespace src
 
             public string singleSearchBFS(string directory, string file)
             {
-                //string target masih harus dipisah dari dir root
 
                 addKeyPath(directory, "");
                 string returnPath = directory;
@@ -217,11 +216,12 @@ namespace src
                         if (string.Equals(_vertex, file))
                         {
                             this.getPath(directory, vertex);
-                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini memeriksa pas ketemu
+                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
                             return vertex;
 
                         }
-                        this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
+                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini membangkitkan
                     }
                     if (!Directory.Exists(vertex))
                     {
@@ -242,45 +242,21 @@ namespace src
 
                         if (!visited.Contains(s))
                         {
-                            if (AdjacencyList.ContainsKey(_s))
+                            this.addVertex(_s);
+
+                            if (string.Equals(vertex, directory))
                             {
-                                string newName = _s + "copy";
-                                string newPath = s + "copy";
-                                this.addVertex(newName);
-                                predVertex.Add(newName, _vertex);
-                                if (string.Equals(vertex, directory))
-                                {
-                                    this.addEdge(Tuple.Create(vertex, newName));
-                                    this.ParentAndChildren.Add(Tuple.Create(vertex, newName));
-                                }
-                                else
-                                {
-                                    this.addEdge(Tuple.Create(_vertex, newName));
-                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, newName));
-                                }
+                                this.addEdge(Tuple.Create(vertex, _s));
                             }
                             else
                             {
-                                this.addVertex(_s);
-                                predVertex.Add(_s, _vertex);
-
-                                if (string.Equals(vertex, directory))
-                                {
-                                    this.addEdge(Tuple.Create(vertex, _s));
-                                    this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
-                                }
-                                else
-                                {
-                                    this.addEdge(Tuple.Create(_vertex, _s));
-                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
-                                }
+                                this.addEdge(Tuple.Create(_vertex, _s));
                             }
+                            this.ParentAndChildren.Add(Tuple.Create(vertex, s));
 
                             totalEdges++; totalNodes++;
 
-
                             searchQueue.Enqueue(s);
-
 
                         }
                         else { continue; }
@@ -315,7 +291,6 @@ namespace src
                     }
                     else
                     {
-                        
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
                         visited.Add(vertex);
@@ -323,13 +298,10 @@ namespace src
                         if (string.Equals(_vertex, file))
                         {
                             this.getMultiplePath(directory, vertex);
-                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
                             returnPath.Add(vertex);
                         }
-                        else
-                        {
-                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
-                        }
+                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));         // ini membangkitkan
                     }
                     if (!Directory.Exists(vertex))
                     {
@@ -349,44 +321,20 @@ namespace src
 
                         if (!visited.Contains(s))
                         {
-
-                            if (AdjacencyList.ContainsKey(_s))
-                            {
-                                string newName = _s + "copy";
-                                string newPath = s + "copy";
-                                this.addVertex(newName);
-                                predVertex.Add(newName, _vertex);
+                            this.addVertex(_s);
                                 
-                                if (string.Equals(vertex, directory))
-                                {
-                                    this.addEdge(Tuple.Create(vertex, newName));
-                                    this.ParentAndChildren.Add(Tuple.Create(vertex, newName));
-                                }
-                                else
-                                {
-                                    this.addEdge(Tuple.Create(_vertex, newName));
-                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, newName));
-                                }
+                            if (string.Equals(vertex, directory))
+                            {
+                                this.addEdge(Tuple.Create(vertex, _s));
                             }
                             else
                             {
-                                this.addVertex(_s);
-                                predVertex.Add(_s, _vertex);
-                                
-                                if (string.Equals(vertex, directory))
-                                {
-                                    this.addEdge(Tuple.Create(vertex, _s));
-                                    this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
-                                }
-                                else
-                                {
-                                    this.addEdge(Tuple.Create(_vertex, _s));
-                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
-                                }
+                                this.addEdge(Tuple.Create(_vertex, _s));
                             }
 
-                            totalEdges++; totalNodes++;
+                            this.ParentAndChildren.Add(Tuple.Create(vertex, s));
 
+                            totalEdges++; totalNodes++;
 
                             searchQueue.Enqueue(s);
                         }
@@ -464,7 +412,6 @@ namespace src
 
             public string singleSearchDFS(string directory, string file)
             {
-                //string target masih harus dipisah dari dir root
                 addKeyPath(directory, "");
                 string returnPath = directory;
                 string lastVertex = directory;
@@ -492,11 +439,12 @@ namespace src
                         if (string.Equals(_vertex, file))
                         {
                             this.getPath(directory, vertex);
-                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini memeriksa pas ketemu
+                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
                             return vertex;
 
                         }
-                        this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
+                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));      // ini membangkitkan
                     }
                     if (!Directory.Exists(vertex))
                     {
@@ -518,41 +466,20 @@ namespace src
                       
                         if (!visited.Contains(s))
                         {
-                            if (AdjacencyList.ContainsKey(_s))
+                            this.addVertex(_s);
+
+                            if (string.Equals(vertex, directory))
                             {
-                                string newName = _s + "copy";
-                                string newPath = s + "copy";
-                                this.addVertex(newName);
-                                predVertex.Add(newName, _vertex);
-                                if (string.Equals(vertex, directory))
-                                {
-                                    this.addEdge(Tuple.Create(vertex, newName));
-                                    this.ParentAndChildren.Add(Tuple.Create(vertex, newName));
-                                }
-                                else
-                                {
-                                    this.addEdge(Tuple.Create(_vertex, newName));
-                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, newName));
-                                }
+                                this.addEdge(Tuple.Create(vertex, _s));
                             }
                             else
                             {
-                                this.addVertex(_s);
-                                predVertex.Add(_s, _vertex);
-
-                                if (string.Equals(vertex, directory))
-                                {
-                                    this.addEdge(Tuple.Create(vertex, _s));
-                                    this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
-                                }
-                                else
-                                {
-                                    this.addEdge(Tuple.Create(_vertex, _s));
-                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
-                                }
+                                this.addEdge(Tuple.Create(_vertex, _s));
                             }
+                            this.ParentAndChildren.Add(Tuple.Create(vertex, s));
 
                             totalEdges++; totalNodes++;
+                            
                             searchStack.Push(s);
                         }
                         else { continue; }
@@ -564,7 +491,6 @@ namespace src
 
             public List<string> multipleSearchDFS(string directory, string file)
             {
-                //string target masih harus dipisah dari dir root
                 addKeyPath(directory, "");
                 List<string> returnPath = new List<string>();
                 this.file = file;
@@ -590,13 +516,10 @@ namespace src
                         if (string.Equals(_vertex, file))
                         {
                             this.getMultiplePath(directory, vertex);
-                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
                             returnPath.Add(vertex);
                         }
-                        else
-                        {
-                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
-                        }
+                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));     // ini membangkitkan
                     }
                     if (!Directory.Exists(vertex))
                     {
@@ -608,12 +531,6 @@ namespace src
                     allfiles.AddRange(files);
                     allfiles.AddRange(dirs);
                     visited.Add(vertex);
-                    if (visitedVertex.Contains(_vertex) && _vertex != directory)
-                    {
-                        string newName = _vertex + "copy";
-                        visitedVertex.Add(newName);
-
-                    }
                     visitedVertex.Add(_vertex);
                     foreach (string s in allfiles)
                     {
@@ -623,55 +540,20 @@ namespace src
                         _s = _s.Replace("\\", "");
                         if (!visited.Contains(s))
                         {
-
-                            if (AdjacencyList.ContainsKey(_s))
-                            {
-                                string newName = _s + "copy";
-                                string newPath = s + "copy";
-                                this.addVertex(newName);
-                                predVertex.Add(newName, _vertex);
-
-                                if (string.Equals(vertex, directory))
-                                {
-                                    this.addEdge(Tuple.Create(vertex, newName));
-                                    this.ParentAndChildren.Add(Tuple.Create(vertex, newName));
-                                }
-                                else
-                                {
-                                    this.addEdge(Tuple.Create(_vertex, newName));
-                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, newName));
-                                }
-                            }
-                            else
-                            {
-                                this.addVertex(_s);
-                                predVertex.Add(_s, _vertex);
-
-                                if (string.Equals(vertex, directory))
-                                {
-                                    this.addEdge(Tuple.Create(vertex, _s));
-                                    this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
-                                }
-                                else
-                                {
-                                    this.addEdge(Tuple.Create(_vertex, _s));
-                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
-                                }
-                            }
+                            this.addVertex(_s);
 
                             if (string.Equals(vertex, directory))
                             {
                                 this.addEdge(Tuple.Create(vertex, _s));
-                                this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
                             }
                             else
                             {
                                 this.addEdge(Tuple.Create(_vertex, _s));
-                                this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
                             }
 
+                            this.ParentAndChildren.Add(Tuple.Create(vertex, s));
+                            
                             totalEdges++; totalNodes++;
-
 
                             searchStack.Push(s);
 

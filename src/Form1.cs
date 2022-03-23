@@ -154,15 +154,23 @@ namespace src
             {
                 string parent = parentChild.Item1;
                 string child = parentChild.Item2;
+
                 // membangkitkan
                 if (!newAdjlist.Contains(Tuple.Create(parent, child)))
                 {
                     graph.AddEdge(parent, child);
+                    if (!String.Equals(parent, this.graf.Dir))
+                    {
+                        graph.FindNode(parent).LabelText = new DirectoryInfo(parent).Name;
+                    }
+                    graph.FindNode(child).LabelText = new DirectoryInfo(child).Name;
+
                     newAdjlist.Add(Tuple.Create(parent, child));
                 }
                 // memeriksa
                 else if (!newVisited.Contains(Tuple.Create(parent, child)))
                 {
+                    // String childName = new DirectoryInfo(child).Name;
                     Microsoft.Msagl.Drawing.Node ch = graph.FindNode(child);
                     foreach (Microsoft.Msagl.Drawing.Edge e in ch.InEdges)
                     {
@@ -175,7 +183,7 @@ namespace src
                 else
                 {
                     Microsoft.Msagl.Drawing.Node ch = graph.FindNode(child);
-                    Microsoft.Msagl.Drawing.Node root = graph.FindNode(parent);
+                    Microsoft.Msagl.Drawing.Node root = graph.FindNode(this.graf.Dir);
 
                     while (ch != root)
                     {
@@ -189,21 +197,8 @@ namespace src
                 }
 
                 bindGraph(graph);
-                wait(1000);
+                wait(500);
             }
-            
-
-            //TEST nampilin graph, nanti diganti sama graph yang dari graf hasil DFS/BFS
-            //create the graph content 
-            /*graph.AddEdge("A", "B");
-            graph.AddEdge("B", "C");
-            graph.AddEdge("A", "C").Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
-            graph.FindNode("A").Attr.FillColor = Microsoft.Msagl.Drawing.Color.Magenta;
-            graph.FindNode("B").Attr.FillColor = Microsoft.Msagl.Drawing.Color.MistyRose;
-            Microsoft.Msagl.Drawing.Node c = graph.FindNode("C");
-            c.Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
-            c.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Diamond;
-            */
         }
 
         void bindGraph(Microsoft.Msagl.Drawing.Graph graph)
