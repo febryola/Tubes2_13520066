@@ -23,7 +23,7 @@ namespace src
         {
             this.Controls.Clear();
             this.InitializeComponent();
-            this.graf = new Graph(null, null);
+            this.graf = new Graph(@"D:\", "RiotClientServices.exe");
             this.graf.onfilefound += filefound;
             // bgworker.DoWork += backgroundWorker1_DoWork;
         }
@@ -39,7 +39,7 @@ namespace src
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void buttonChooseFolder_Click(object sender, EventArgs e)
