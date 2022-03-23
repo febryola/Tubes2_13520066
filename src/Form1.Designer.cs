@@ -40,6 +40,7 @@ namespace src
             this.buttonSearch = new System.Windows.Forms.Button();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.panelOutput = new System.Windows.Forms.Panel();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.pathBox = new System.Windows.Forms.TextBox();
             this.panelGraph = new System.Windows.Forms.Panel();
             this.resultBox = new System.Windows.Forms.TextBox();
@@ -53,7 +54,7 @@ namespace src
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.printDialog2 = new System.Windows.Forms.PrintDialog();
             this.bgworker = new System.ComponentModel.BackgroundWorker();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.panelOutput.SuspendLayout();
             this.panelInput.SuspendLayout();
             this.SuspendLayout();
@@ -188,6 +189,7 @@ namespace src
             // panelOutput
             // 
             this.panelOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panelOutput.Controls.Add(this.label1);
             this.panelOutput.Controls.Add(this.richTextBox1);
             this.panelOutput.Controls.Add(this.pathBox);
             this.panelOutput.Controls.Add(this.panelGraph);
@@ -202,6 +204,15 @@ namespace src
             this.panelOutput.Size = new System.Drawing.Size(540, 422);
             this.panelOutput.TabIndex = 23;
             this.panelOutput.Paint += new System.Windows.Forms.PaintEventHandler(this.panelOutput_Paint);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(18, 338);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(474, 41);
+            this.richTextBox1.TabIndex = 29;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // pathBox
             // 
@@ -350,14 +361,17 @@ namespace src
             // 
             this.bgworker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
-            // richTextBox1
+            // label1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(18, 338);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(474, 41);
-            this.richTextBox1.TabIndex = 29;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(111, 382);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 20);
+            this.label1.TabIndex = 30;
             // 
             // Form1
             // 
@@ -409,5 +423,6 @@ namespace src
         private Button buttonRefresh;
         private TextBox pathBox;
         private RichTextBox richTextBox1;
+        private Label label1;
     }
 }

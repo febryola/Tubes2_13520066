@@ -140,7 +140,11 @@ namespace src
                 }
 
             }
+            DateTime dt = DateTime.Now;
             drawGraph(this.graf);
+            TimeSpan ts = DateTime.Now - dt;
+            string waktu = ts.TotalSeconds.ToString();
+            label1.Text = waktu + " Second";
 
         }
 
@@ -300,5 +304,6 @@ namespace src
         {
 
         }
+
     }
 }
