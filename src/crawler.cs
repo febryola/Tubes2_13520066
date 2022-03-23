@@ -213,15 +213,14 @@ namespace src
                         _vertex = _vertex.Replace("\\", "");
                         visited.Add(vertex);
                         visitedVertex.Add(_vertex);
+                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
                         if (string.Equals(_vertex, file))
                         {
                             this.getPath(directory, vertex);
-                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini memeriksa pas ketemu
                             this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
                             return vertex;
 
                         }
-                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini membangkitkan
                     }
                     if (!Directory.Exists(vertex))
                     {
@@ -295,13 +294,14 @@ namespace src
                         _vertex = _vertex.Replace("\\", "");
                         visited.Add(vertex);
                         visitedVertex.Add(_vertex);
+                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
+
                         if (string.Equals(_vertex, file))
                         {
                             this.getMultiplePath(directory, vertex);
                             this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
                             returnPath.Add(vertex);
                         }
-                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));         // ini membangkitkan
                     }
                     if (!Directory.Exists(vertex))
                     {
@@ -436,15 +436,14 @@ namespace src
                         _vertex = _vertex.Replace("\\", "");
                         visited.Add(vertex);
                         visitedVertex.Add(_vertex);
+                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
                         if (string.Equals(_vertex, file))
                         {
                             this.getPath(directory, vertex);
-                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini memeriksa pas ketemu
                             this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
                             return vertex;
 
                         }
-                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));      // ini membangkitkan
                     }
                     if (!Directory.Exists(vertex))
                     {
@@ -513,13 +512,14 @@ namespace src
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
                         
+                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
+
                         if (string.Equals(_vertex, file))
                         {
                             this.getMultiplePath(directory, vertex);
                             this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
                             returnPath.Add(vertex);
                         }
-                        this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));     // ini membangkitkan
                     }
                     if (!Directory.Exists(vertex))
                     {
