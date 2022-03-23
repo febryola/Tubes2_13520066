@@ -201,7 +201,7 @@ namespace src
                 }
 
                 bindGraph(graph);
-                wait(500);
+                wait(trackBarDelay.Value);
             }
         }
 
@@ -305,5 +305,9 @@ namespace src
 
         }
 
+        private void trackBarDelay_Scroll(object sender, EventArgs e)
+        {
+
+        }
     }
 }
