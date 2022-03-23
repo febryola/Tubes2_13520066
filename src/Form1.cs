@@ -51,11 +51,7 @@ namespace src
                     string resultpath = bfs.singleSearchBFS(this.graf.Dir, this.graf.File);
                     if(resultpath != this.graf.Dir)
                     {
-                        LinkLabel link = new LinkLabel();
-                        link.Text = resultpath;
-                        link.AutoSize = true;
-                        this.richTextBox1.Controls.Add(link);
-                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                        visitedFolderSingle(resultpath);
 
                     }
                     else
@@ -77,23 +73,14 @@ namespace src
                     {
                         foreach (string path in resultpaths)
                         {
-                            LinkLabel link = new LinkLabel();
-                            link.Text = path;
-                            link.AutoSize = true;
-                            this.richTextBox1.Controls.Add(link);
-                            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                            visitedFolderSingle(path);
                         }
                     }
                     else
                     {
                         foreach (string path in resultpaths)
                         {
-                            LinkLabel link = new LinkLabel();
-                            link.Text = path;
-                            link.AutoSize = true;
-                            this.richTextBox1.Controls.Add(link);
-                            this.richTextBox1.AppendText("\n");
-                            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                            visitedFolderMultiple(path);
                         }
                     }
                    
@@ -109,11 +96,7 @@ namespace src
                     string resultpath = dfs.singleSearchDFS(this.graf.Dir, this.graf.File);
                     if(resultpath != this.graf.Dir)
                     {
-                        LinkLabel link = new LinkLabel();
-                        link.Text = resultpath;
-                        link.AutoSize = true;
-                        this.richTextBox1.Controls.Add(link);
-                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                        visitedFolderSingle(resultpath);
 
                     }
                     else
@@ -135,23 +118,14 @@ namespace src
                     {
                         foreach (string path in resultpaths)
                         {
-                            LinkLabel link = new LinkLabel();
-                            link.Text = path;
-                            link.AutoSize = true;
-                            this.richTextBox1.Controls.Add(link);
-                            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                            visitedFolderSingle(path);
                         }
                     }
                     else
                     {
                         foreach (string path in resultpaths)
                         {
-                            LinkLabel link = new LinkLabel();
-                            link.Text = path;
-                            link.AutoSize = true;
-                            this.richTextBox1.Controls.Add(link);
-                            this.richTextBox1.AppendText("\n");
-                            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                            visitedFolderMultiple(path);
                         }
                     }
                    
@@ -164,6 +138,11 @@ namespace src
             string waktu = ts.TotalSeconds.ToString();
             label1.Text = waktu + " Second";
 
+        }
+
+        private void Link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void drawGraph(Graph graf)
@@ -250,5 +229,34 @@ namespace src
                 Application.DoEvents();
             }
         }
+
+        public void visitedFolderSingle(string folder)
+        {
+            LinkLabel link = new LinkLabel();
+            link.Text = folder;
+            link.AutoSize = true;
+            this.richTextBox1.Controls.Add(link);
+            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+            link.LinkClicked += Link_LinkClicked1;
+        }
+
+        public void visitedFolderMultiple(string folder)
+        {
+            LinkLabel link = new LinkLabel();
+            link.Text = folder;
+            link.AutoSize = true;
+            this.richTextBox1.Controls.Add(link);
+            this.richTextBox1.AppendText("\n");
+            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+            link.LinkClicked += Link_LinkClicked1;
+        }
+
+
+
+        private void Link_LinkClicked1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer.exe", @"E:\TEST");
+        }
+
     }
 }
