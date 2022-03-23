@@ -7,7 +7,7 @@ namespace src
     public partial class Form1 : Form
     {
         private Graph graf;
-        Microsoft.Msagl.Drawing.Graph graph;
+        Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
         Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
 
         public Form1()
@@ -24,6 +24,7 @@ namespace src
             this.Controls.Clear();
             this.InitializeComponent();
             this.graf = new Graph(@"D:\", "RiotClientServices.exe");
+            Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
             this.graf.onfilefound += filefound;
             // bgworker.DoWork += backgroundWorker1_DoWork;
         }
@@ -53,7 +54,7 @@ namespace src
         }
 
 
-                private void buttonSearch_Click(object sender, EventArgs e)
+        private void buttonSearch_Click(object sender, EventArgs e)
         {
             this.graf.File = textBoxFilename.Text;
             this.graf.Dir = textBoxDir.Text;
