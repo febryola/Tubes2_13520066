@@ -395,10 +395,6 @@ namespace src
             // 
             this.printDialog2.UseEXDialog = true;
             // 
-            // bgworker
-            // 
-            this.bgworker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);

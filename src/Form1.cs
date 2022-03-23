@@ -14,9 +14,6 @@ namespace src
         {
             InitializeComponent();
             this.graf = new Graph(@"D:\", "RiotClientServices.exe");
-            this.graf.onfilefound += filefound;
-            // bgworker.DoWork += backgroundWorker1_DoWork;
-
         }
 
         private void buttonRefresh_Click(object sender, EventArgs e)
@@ -25,19 +22,8 @@ namespace src
             this.InitializeComponent();
             this.graf = new Graph(@"D:\", "RiotClientServices.exe");
             Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
-            this.graf.onfilefound += filefound;
-            // bgworker.DoWork += backgroundWorker1_DoWork;
         }
 
-        private void filefound(string path)
-        {
-            /*   
-            listBox1.BeginInvoke((Action)delegate ()
-            {
-                listBox1.Items.Add(path);
-            });
-            */
-        }
         private void Form1_Load(object sender, EventArgs e)
         {
             
@@ -248,11 +234,6 @@ namespace src
         private void panelHeader_Paint(object sender, PaintEventArgs e)
         {
 
-        }
-
-        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            graf.search();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)

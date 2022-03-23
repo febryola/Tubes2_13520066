@@ -9,7 +9,6 @@ using Microsoft.Msagl.Drawing;
 
 namespace src
 {
-    delegate void filefound(string path);
     internal class Graph
     {
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
@@ -22,7 +21,6 @@ namespace src
         private Dictionary<string, HashSet<string>> AdjacencyList = new Dictionary<string, HashSet<string>>();
         private List<Tuple<string, string>> ParentAndChildren = new List<Tuple<string, string>>();
 
-        public event filefound onfilefound;
         //constructor
         public Graph()
         {
@@ -49,37 +47,6 @@ namespace src
             return this.ParentAndChildren;
         }
 
-        private void scanning(string directory, string lastVertex)
-        {
-            string[] files = Directory.GetFiles(directory);
-            string[] dirs = Directory.GetDirectories(directory);
-
-            List<string> allfiles = new List<string>();
-            allfiles.AddRange(files);
-            allfiles.AddRange(dirs);
-
-            foreach (string s in allfiles)
-            {
-                string _s = s;
-                _s = _s.Replace(directory, "");
-                _s = _s.Replace("\\", "");
-                string _file = this.file.ToLower();
-                this.addVertex(_s);
-                this.addEdge(Tuple.Create(lastVertex, _s));
-                if (Directory.Exists(s) && s != "." && s != "..")
-                {
-                    scanning(s, _s);
-                    totalEdges++;
-
-                }
-                if (_s.Contains(_file))
-                {
-                    onfilefound(s);
-                    totalNodes++;
-                }
-            }
-        }
-
         public void addVertex(string vertex)
         {
             this.AdjacencyList[vertex] = new HashSet<string>();
@@ -92,11 +59,6 @@ namespace src
                 this.AdjacencyList[edge.Item1].Add(edge.Item2);
                 this.AdjacencyList[edge.Item2].Add(edge.Item1);
             }
-        }
-
-        public void search()
-        {
-            scanning(this.dir, this.dir);
         }
 
 
