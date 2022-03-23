@@ -43,7 +43,6 @@ namespace src
             this.pathBox = new System.Windows.Forms.TextBox();
             this.panelGraph = new System.Windows.Forms.Panel();
             this.resultBox = new System.Windows.Forms.TextBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.labelTimeSpent = new System.Windows.Forms.Label();
             this.labelPathFile = new System.Windows.Forms.Label();
             this.panelInput = new System.Windows.Forms.Panel();
@@ -54,6 +53,7 @@ namespace src
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.printDialog2 = new System.Windows.Forms.PrintDialog();
             this.bgworker = new System.ComponentModel.BackgroundWorker();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panelOutput.SuspendLayout();
             this.panelInput.SuspendLayout();
             this.SuspendLayout();
@@ -64,10 +64,10 @@ namespace src
             this.labelInput.BackColor = System.Drawing.Color.Transparent;
             this.labelInput.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelInput.ForeColor = System.Drawing.Color.DarkCyan;
-            this.labelInput.Location = new System.Drawing.Point(21, 24);
+            this.labelInput.Location = new System.Drawing.Point(17, 19);
             this.labelInput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelInput.Name = "labelInput";
-            this.labelInput.Size = new System.Drawing.Size(72, 32);
+            this.labelInput.Size = new System.Drawing.Size(61, 28);
             this.labelInput.TabIndex = 12;
             this.labelInput.Text = "Input";
             // 
@@ -77,10 +77,10 @@ namespace src
             this.labelOutput.BackColor = System.Drawing.Color.Transparent;
             this.labelOutput.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelOutput.ForeColor = System.Drawing.Color.White;
-            this.labelOutput.Location = new System.Drawing.Point(22, 24);
+            this.labelOutput.Location = new System.Drawing.Point(18, 19);
             this.labelOutput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelOutput.Name = "labelOutput";
-            this.labelOutput.Size = new System.Drawing.Size(105, 32);
+            this.labelOutput.Size = new System.Drawing.Size(88, 28);
             this.labelOutput.TabIndex = 13;
             this.labelOutput.Text = "Output :";
             this.labelOutput.Click += new System.EventHandler(this.labelOutput_Click);
@@ -89,28 +89,28 @@ namespace src
             // 
             this.labelInputFile.AutoSize = true;
             this.labelInputFile.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelInputFile.Location = new System.Drawing.Point(21, 178);
+            this.labelInputFile.Location = new System.Drawing.Point(17, 142);
             this.labelInputFile.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelInputFile.Name = "labelInputFile";
-            this.labelInputFile.Size = new System.Drawing.Size(145, 25);
+            this.labelInputFile.Size = new System.Drawing.Size(118, 20);
             this.labelInputFile.TabIndex = 15;
             this.labelInputFile.Text = "Input File Name";
             // 
             // textBoxFilename
             // 
-            this.textBoxFilename.Location = new System.Drawing.Point(21, 206);
+            this.textBoxFilename.Location = new System.Drawing.Point(17, 165);
             this.textBoxFilename.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxFilename.Name = "textBoxFilename";
-            this.textBoxFilename.Size = new System.Drawing.Size(269, 31);
+            this.textBoxFilename.Size = new System.Drawing.Size(216, 27);
             this.textBoxFilename.TabIndex = 16;
             // 
             // checkBoxAllOcc
             // 
             this.checkBoxAllOcc.AutoSize = true;
-            this.checkBoxAllOcc.Location = new System.Drawing.Point(21, 242);
+            this.checkBoxAllOcc.Location = new System.Drawing.Point(17, 194);
             this.checkBoxAllOcc.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxAllOcc.Name = "checkBoxAllOcc";
-            this.checkBoxAllOcc.Size = new System.Drawing.Size(184, 29);
+            this.checkBoxAllOcc.Size = new System.Drawing.Size(154, 24);
             this.checkBoxAllOcc.TabIndex = 17;
             this.checkBoxAllOcc.Text = "Find All Occurence";
             this.checkBoxAllOcc.UseVisualStyleBackColor = true;
@@ -120,20 +120,20 @@ namespace src
             // 
             this.labelMethod.AutoSize = true;
             this.labelMethod.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelMethod.Location = new System.Drawing.Point(21, 305);
+            this.labelMethod.Location = new System.Drawing.Point(17, 244);
             this.labelMethod.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelMethod.Name = "labelMethod";
-            this.labelMethod.Size = new System.Drawing.Size(137, 25);
+            this.labelMethod.Size = new System.Drawing.Size(113, 20);
             this.labelMethod.TabIndex = 18;
             this.labelMethod.Text = "Search Method";
             // 
             // radioButtonBFS
             // 
             this.radioButtonBFS.AutoSize = true;
-            this.radioButtonBFS.Location = new System.Drawing.Point(21, 332);
+            this.radioButtonBFS.Location = new System.Drawing.Point(17, 266);
             this.radioButtonBFS.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonBFS.Name = "radioButtonBFS";
-            this.radioButtonBFS.Size = new System.Drawing.Size(66, 29);
+            this.radioButtonBFS.Size = new System.Drawing.Size(54, 24);
             this.radioButtonBFS.TabIndex = 19;
             this.radioButtonBFS.TabStop = true;
             this.radioButtonBFS.Text = "BFS";
@@ -143,10 +143,10 @@ namespace src
             // radioButtonDFS
             // 
             this.radioButtonDFS.AutoSize = true;
-            this.radioButtonDFS.Location = new System.Drawing.Point(21, 368);
+            this.radioButtonDFS.Location = new System.Drawing.Point(17, 294);
             this.radioButtonDFS.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonDFS.Name = "radioButtonDFS";
-            this.radioButtonDFS.Size = new System.Drawing.Size(69, 29);
+            this.radioButtonDFS.Size = new System.Drawing.Size(56, 24);
             this.radioButtonDFS.TabIndex = 20;
             this.radioButtonDFS.TabStop = true;
             this.radioButtonDFS.Text = "DFS";
@@ -162,10 +162,10 @@ namespace src
             this.buttonSearch.ForeColor = System.Drawing.Color.White;
             this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
             this.buttonSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonSearch.Location = new System.Drawing.Point(21, 422);
+            this.buttonSearch.Location = new System.Drawing.Point(17, 338);
             this.buttonSearch.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(106, 34);
+            this.buttonSearch.Size = new System.Drawing.Size(85, 27);
             this.buttonSearch.TabIndex = 21;
             this.buttonSearch.Text = "Search";
             this.buttonSearch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -181,25 +181,25 @@ namespace src
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Margin = new System.Windows.Forms.Padding(2);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(986, 98);
+            this.panelHeader.Size = new System.Drawing.Size(789, 78);
             this.panelHeader.TabIndex = 22;
             this.panelHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.panelHeader_Paint);
             // 
             // panelOutput
             // 
             this.panelOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panelOutput.Controls.Add(this.richTextBox1);
             this.panelOutput.Controls.Add(this.pathBox);
             this.panelOutput.Controls.Add(this.panelGraph);
             this.panelOutput.Controls.Add(this.resultBox);
-            this.panelOutput.Controls.Add(this.listBox1);
             this.panelOutput.Controls.Add(this.labelTimeSpent);
             this.panelOutput.Controls.Add(this.labelPathFile);
             this.panelOutput.Controls.Add(this.labelOutput);
             this.panelOutput.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelOutput.Location = new System.Drawing.Point(311, 98);
+            this.panelOutput.Location = new System.Drawing.Point(249, 78);
             this.panelOutput.Margin = new System.Windows.Forms.Padding(2);
             this.panelOutput.Name = "panelOutput";
-            this.panelOutput.Size = new System.Drawing.Size(675, 527);
+            this.panelOutput.Size = new System.Drawing.Size(540, 422);
             this.panelOutput.TabIndex = 23;
             this.panelOutput.Paint += new System.Windows.Forms.PaintEventHandler(this.panelOutput_Paint);
             // 
@@ -209,20 +209,20 @@ namespace src
             this.pathBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.pathBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
             this.pathBox.ForeColor = System.Drawing.Color.White;
-            this.pathBox.Location = new System.Drawing.Point(118, 398);
+            this.pathBox.Location = new System.Drawing.Point(94, 318);
             this.pathBox.Margin = new System.Windows.Forms.Padding(2);
             this.pathBox.Name = "pathBox";
-            this.pathBox.Size = new System.Drawing.Size(482, 24);
+            this.pathBox.Size = new System.Drawing.Size(386, 20);
             this.pathBox.TabIndex = 28;
             this.pathBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
             // panelGraph
             // 
             this.panelGraph.BackColor = System.Drawing.Color.White;
-            this.panelGraph.Location = new System.Drawing.Point(22, 68);
+            this.panelGraph.Location = new System.Drawing.Point(18, 54);
             this.panelGraph.Margin = new System.Windows.Forms.Padding(2);
             this.panelGraph.Name = "panelGraph";
-            this.panelGraph.Size = new System.Drawing.Size(592, 318);
+            this.panelGraph.Size = new System.Drawing.Size(474, 254);
             this.panelGraph.TabIndex = 15;
             // 
             // resultBox
@@ -231,23 +231,12 @@ namespace src
             this.resultBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.resultBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
             this.resultBox.ForeColor = System.Drawing.Color.White;
-            this.resultBox.Location = new System.Drawing.Point(132, 24);
+            this.resultBox.Location = new System.Drawing.Point(106, 19);
             this.resultBox.Margin = new System.Windows.Forms.Padding(2);
             this.resultBox.Name = "resultBox";
-            this.resultBox.Size = new System.Drawing.Size(482, 32);
+            this.resultBox.Size = new System.Drawing.Size(386, 27);
             this.resultBox.TabIndex = 27;
             this.resultBox.TextChanged += new System.EventHandler(this.resultBox_TextChanged);
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 25;
-            this.listBox1.Location = new System.Drawing.Point(22, 426);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(592, 54);
-            this.listBox1.TabIndex = 26;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // labelTimeSpent
             // 
@@ -255,10 +244,10 @@ namespace src
             this.labelTimeSpent.BackColor = System.Drawing.Color.Transparent;
             this.labelTimeSpent.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelTimeSpent.ForeColor = System.Drawing.Color.White;
-            this.labelTimeSpent.Location = new System.Drawing.Point(22, 478);
+            this.labelTimeSpent.Location = new System.Drawing.Point(18, 382);
             this.labelTimeSpent.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelTimeSpent.Name = "labelTimeSpent";
-            this.labelTimeSpent.Size = new System.Drawing.Size(111, 25);
+            this.labelTimeSpent.Size = new System.Drawing.Size(89, 20);
             this.labelTimeSpent.TabIndex = 25;
             this.labelTimeSpent.Text = "Time Spent:";
             // 
@@ -268,10 +257,10 @@ namespace src
             this.labelPathFile.BackColor = System.Drawing.Color.Transparent;
             this.labelPathFile.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelPathFile.ForeColor = System.Drawing.Color.White;
-            this.labelPathFile.Location = new System.Drawing.Point(22, 398);
+            this.labelPathFile.Location = new System.Drawing.Point(18, 318);
             this.labelPathFile.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelPathFile.Name = "labelPathFile";
-            this.labelPathFile.Size = new System.Drawing.Size(86, 25);
+            this.labelPathFile.Size = new System.Drawing.Size(72, 20);
             this.labelPathFile.TabIndex = 24;
             this.labelPathFile.Text = "Path File:";
             this.labelPathFile.Click += new System.EventHandler(this.labelPathFile_Click);
@@ -291,10 +280,10 @@ namespace src
             this.panelInput.Controls.Add(this.checkBoxAllOcc);
             this.panelInput.Controls.Add(this.radioButtonBFS);
             this.panelInput.Controls.Add(this.labelMethod);
-            this.panelInput.Location = new System.Drawing.Point(0, 98);
+            this.panelInput.Location = new System.Drawing.Point(0, 78);
             this.panelInput.Margin = new System.Windows.Forms.Padding(2);
             this.panelInput.Name = "panelInput";
-            this.panelInput.Size = new System.Drawing.Size(311, 528);
+            this.panelInput.Size = new System.Drawing.Size(249, 422);
             this.panelInput.TabIndex = 24;
             // 
             // buttonRefresh
@@ -306,10 +295,10 @@ namespace src
             this.buttonRefresh.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.buttonRefresh.ForeColor = System.Drawing.Color.White;
             this.buttonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonRefresh.Image")));
-            this.buttonRefresh.Location = new System.Drawing.Point(158, 422);
+            this.buttonRefresh.Location = new System.Drawing.Point(126, 338);
             this.buttonRefresh.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(38, 34);
+            this.buttonRefresh.Size = new System.Drawing.Size(30, 27);
             this.buttonRefresh.TabIndex = 25;
             this.buttonRefresh.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonRefresh.UseVisualStyleBackColor = false;
@@ -319,19 +308,19 @@ namespace src
             // 
             this.labelChooseDir.AutoSize = true;
             this.labelChooseDir.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelChooseDir.Location = new System.Drawing.Point(21, 88);
+            this.labelChooseDir.Location = new System.Drawing.Point(17, 70);
             this.labelChooseDir.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelChooseDir.Name = "labelChooseDir";
-            this.labelChooseDir.Size = new System.Drawing.Size(228, 25);
+            this.labelChooseDir.Size = new System.Drawing.Size(186, 20);
             this.labelChooseDir.TabIndex = 24;
             this.labelChooseDir.Text = "Choose Starting Directory";
             // 
             // textBoxDir
             // 
-            this.textBoxDir.Location = new System.Drawing.Point(19, 115);
+            this.textBoxDir.Location = new System.Drawing.Point(15, 92);
             this.textBoxDir.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDir.Name = "textBoxDir";
-            this.textBoxDir.Size = new System.Drawing.Size(230, 31);
+            this.textBoxDir.Size = new System.Drawing.Size(185, 27);
             this.textBoxDir.TabIndex = 23;
             this.textBoxDir.TextChanged += new System.EventHandler(this.textBoxDir_TextChanged);
             // 
@@ -340,10 +329,10 @@ namespace src
             this.buttonChooseFolder.BackColor = System.Drawing.Color.White;
             this.buttonChooseFolder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonChooseFolder.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonChooseFolder.Location = new System.Drawing.Point(255, 115);
+            this.buttonChooseFolder.Location = new System.Drawing.Point(204, 92);
             this.buttonChooseFolder.Margin = new System.Windows.Forms.Padding(2);
             this.buttonChooseFolder.Name = "buttonChooseFolder";
-            this.buttonChooseFolder.Size = new System.Drawing.Size(35, 31);
+            this.buttonChooseFolder.Size = new System.Drawing.Size(28, 25);
             this.buttonChooseFolder.TabIndex = 22;
             this.buttonChooseFolder.Text = "...";
             this.buttonChooseFolder.UseVisualStyleBackColor = false;
@@ -361,13 +350,22 @@ namespace src
             // 
             this.bgworker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(18, 338);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(474, 41);
+            this.richTextBox1.TabIndex = 29;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(986, 625);
+            this.ClientSize = new System.Drawing.Size(789, 500);
             this.Controls.Add(this.panelInput);
             this.Controls.Add(this.panelOutput);
             this.Controls.Add(this.panelHeader);
@@ -408,8 +406,8 @@ namespace src
         private PrintDialog printDialog1;
         private PrintDialog printDialog2;
         private System.ComponentModel.BackgroundWorker bgworker;
-        private ListBox listBox1;
         private Button buttonRefresh;
         private TextBox pathBox;
+        private RichTextBox richTextBox1;
     }
 }
