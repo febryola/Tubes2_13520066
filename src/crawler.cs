@@ -65,10 +65,10 @@ namespace src
                 _s = _s.Replace("\\", "");
                 string _file = this.file.ToLower();
                 this.addVertex(_s);
-                this.addEdge(Tuple.Create(lastVertex,_s));
+                this.addEdge(Tuple.Create(lastVertex, _s));
                 if (Directory.Exists(s) && s != "." && s != "..")
                 {
-                    scanning(s,_s);
+                    scanning(s, _s);
                     totalEdges++;
 
                 }
@@ -87,7 +87,7 @@ namespace src
 
         public void addEdge(Tuple<string, string> edge)
         {
-            if(this.AdjacencyList.ContainsKey(edge.Item1) && this.AdjacencyList.ContainsKey(edge.Item2))
+            if (this.AdjacencyList.ContainsKey(edge.Item1) && this.AdjacencyList.ContainsKey(edge.Item2))
             {
                 this.AdjacencyList[edge.Item1].Add(edge.Item2);
                 this.AdjacencyList[edge.Item2].Add(edge.Item1);
@@ -97,7 +97,7 @@ namespace src
 
         public void search()
         {
-            scanning(this.dir,this.dir);
+            scanning(this.dir, this.dir);
         }
 
         public string File
@@ -193,32 +193,39 @@ namespace src
 
                 addKeyPath(directory, "");
                 string returnPath = directory;
-                string lastVertex= directory;
+                string lastVertex = directory;
                 this.file = file;
                 visited.Add(directory);
                 visitedVertex.Add(directory);
                 //first iteration
                 searchQueue.Enqueue(directory);
 
-                while(searchQueue.Count != 0)
+                while (searchQueue.Count != 0)
                 {
                     string vertex = searchQueue.Dequeue();
                     string _vertex = " ";
                     if (string.Equals(vertex, directory))
                     {
                         _vertex = directory;
-                    } else
+                    }
+                    else
                     {
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
-                        if (string.Equals(_vertex,file))
-                            {
-                                this.getPath(directory, vertex);
-                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
-                                return vertex;
-                            
-                            }
+                        visited.Add(vertex);
+                        visitedVertex.Add(_vertex);
+                        if (string.Equals(_vertex, file))
+                        {
+                            this.getPath(directory, vertex);
+                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                            return vertex;
+
+                        }
                         this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
+                    }
+                    if (!Directory.Exists(vertex))
+                    {
+                        continue;
                     }
                     string[] files = Directory.GetFiles(vertex);
                     string[] dirs = Directory.GetDirectories(vertex);
@@ -227,40 +234,59 @@ namespace src
                     allfiles.AddRange(dirs);
                     foreach (string s in allfiles)
                     {
-                        predPath.Add(s,vertex);
+                        predPath.Add(s, vertex);
                         string _s = s;
                         _s = _s.Replace(vertex, "");
                         _s = _s.Replace("\\", "");
-                        predVertex.Add(_s, _vertex);
+                        
 
                         if (!visited.Contains(s))
                         {
-                            visited.Add(s);
-                            visitedVertex.Add(_s);
-
-                            this.addVertex(_s);
-                            if (string.Equals(vertex, directory))
+                            if (AdjacencyList.ContainsKey(_s))
                             {
-                                this.addEdge(Tuple.Create(vertex, _s));
-                                this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
+                                string newName = _s + "copy";
+                                string newPath = s + "copy";
+                                this.addVertex(newName);
+                                predVertex.Add(newName, _vertex);
+                                if (string.Equals(vertex, directory))
+                                {
+                                    this.addEdge(Tuple.Create(vertex, newName));
+                                    this.ParentAndChildren.Add(Tuple.Create(vertex, newName));
+                                }
+                                else
+                                {
+                                    this.addEdge(Tuple.Create(_vertex, newName));
+                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, newName));
+                                }
                             }
                             else
                             {
-                                this.addEdge(Tuple.Create(_vertex, _s));
-                                this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
+                                this.addVertex(_s);
+                                predVertex.Add(_s, _vertex);
+
+                                if (string.Equals(vertex, directory))
+                                {
+                                    this.addEdge(Tuple.Create(vertex, _s));
+                                    this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
+                                }
+                                else
+                                {
+                                    this.addEdge(Tuple.Create(_vertex, _s));
+                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
+                                }
                             }
-                            
+
                             totalEdges++; totalNodes++;
-                            
-                            
+
+
                             searchQueue.Enqueue(s);
-                            
-                            
+
+
                         }
                         else { continue; }
-                        
+
                     }
-                    
+
                 }
 
                 return returnPath;
@@ -289,16 +315,25 @@ namespace src
                     }
                     else
                     {
+                        
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
-                        if (string.Equals(_vertex,file))
+                        visited.Add(vertex);
+                        visitedVertex.Add(_vertex);
+                        if (string.Equals(_vertex, file))
                         {
-                                this.getMultiplePath(directory, vertex);
-                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
-                                returnPath.Add(vertex);
-                        } else {
+                            this.getMultiplePath(directory, vertex);
+                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                            returnPath.Add(vertex);
+                        }
+                        else
+                        {
                             this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
                         }
+                    }
+                    if (!Directory.Exists(vertex))
+                    {
+                        continue;
                     }
                     string[] files = Directory.GetFiles(vertex);
                     string[] dirs = Directory.GetDirectories(vertex);
@@ -311,18 +346,17 @@ namespace src
                         string _s = s;
                         _s = _s.Replace(vertex, "");
                         _s = _s.Replace("\\", "");
-                        
+
                         if (!visited.Contains(s))
                         {
-                           
+
                             if (AdjacencyList.ContainsKey(_s))
                             {
                                 string newName = _s + "copy";
                                 string newPath = s + "copy";
                                 this.addVertex(newName);
                                 predVertex.Add(newName, _vertex);
-                                visited.Add(newPath);
-                                visitedVertex.Add(newName);
+                                
                                 if (string.Equals(vertex, directory))
                                 {
                                     this.addEdge(Tuple.Create(vertex, newName));
@@ -338,8 +372,7 @@ namespace src
                             {
                                 this.addVertex(_s);
                                 predVertex.Add(_s, _vertex);
-                                visited.Add(s);
-                                visitedVertex.Add(_s);
+                                
                                 if (string.Equals(vertex, directory))
                                 {
                                     this.addEdge(Tuple.Create(vertex, _s));
@@ -354,7 +387,7 @@ namespace src
 
                             totalEdges++; totalNodes++;
 
-                            
+
                             searchQueue.Enqueue(s);
                         }
                         else { continue; }
@@ -401,17 +434,18 @@ namespace src
             public Dictionary<string, string> predVertex = new Dictionary<string, string>();
             public HashSet<string> returnVertex = new HashSet<string>();
             public HashSet<HashSet<string>> returnMultipleVertex = new HashSet<HashSet<string>>();
-            public void getPath(string root ,string file)
+            public void getPath(string root, string file)
             {
 
-                while(!String.Equals(root, file)){
+                while (!String.Equals(root, file))
+                {
                     string _vertex = file.Replace(predPath[file], "");
                     _vertex = _vertex.Replace("\\", "");
                     returnVertex.Add(_vertex);
                     file = (predPath[file]);
                 }
                 returnVertex.Add(root);
-                
+
             }
 
             public void getMultiplePath(string root, string file)
@@ -453,14 +487,20 @@ namespace src
                     {
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
-                        if (string.Equals(_vertex,file))
-                            {
-                                this.getPath(directory, vertex);
-                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
-                                return vertex;
-                            
-                            }
+                        visited.Add(vertex);
+                        visitedVertex.Add(_vertex);
+                        if (string.Equals(_vertex, file))
+                        {
+                            this.getPath(directory, vertex);
+                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                            return vertex;
+
+                        }
                         this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
+                    }
+                    if (!Directory.Exists(vertex))
+                    {
+                        continue;
                     }
                     string[] files = Directory.GetFiles(vertex);
                     string[] dirs = Directory.GetDirectories(vertex);
@@ -475,21 +515,41 @@ namespace src
                         string _s = s;
                         _s = _s.Replace(vertex, "");
                         _s = _s.Replace("\\", "");
-                        predVertex.Add(_s, _vertex);
+                      
                         if (!visited.Contains(s))
                         {
-                            
-
-                            this.addVertex(_s);
-                            if (string.Equals(vertex, directory))
+                            if (AdjacencyList.ContainsKey(_s))
                             {
-                                this.addEdge(Tuple.Create(vertex, _s));
-                                this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
+                                string newName = _s + "copy";
+                                string newPath = s + "copy";
+                                this.addVertex(newName);
+                                predVertex.Add(newName, _vertex);
+                                if (string.Equals(vertex, directory))
+                                {
+                                    this.addEdge(Tuple.Create(vertex, newName));
+                                    this.ParentAndChildren.Add(Tuple.Create(vertex, newName));
+                                }
+                                else
+                                {
+                                    this.addEdge(Tuple.Create(_vertex, newName));
+                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, newName));
+                                }
                             }
                             else
                             {
-                                this.addEdge(Tuple.Create(_vertex, _s));
-                                this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
+                                this.addVertex(_s);
+                                predVertex.Add(_s, _vertex);
+
+                                if (string.Equals(vertex, directory))
+                                {
+                                    this.addEdge(Tuple.Create(vertex, _s));
+                                    this.ParentAndChildren.Add(Tuple.Create(vertex, _s));
+                                }
+                                else
+                                {
+                                    this.addEdge(Tuple.Create(_vertex, _s));
+                                    this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
+                                }
                             }
 
                             totalEdges++; totalNodes++;
@@ -526,14 +586,21 @@ namespace src
                     {
                         _vertex = vertex.Replace(predPath[vertex], "");
                         _vertex = _vertex.Replace("\\", "");
-                        if (string.Equals(_vertex,file))
+                        
+                        if (string.Equals(_vertex, file))
                         {
-                                this.getMultiplePath(directory, vertex);
-                                this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
-                                returnPath.Add(vertex);
-                        } else {
+                            this.getMultiplePath(directory, vertex);
+                            this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));   // ini result
+                            returnPath.Add(vertex);
+                        }
+                        else
+                        {
                             this.ParentAndChildren.Add(Tuple.Create(predVertex[_vertex], _vertex));
                         }
+                    }
+                    if (!Directory.Exists(vertex))
+                    {
+                        continue;
                     }
                     string[] files = Directory.GetFiles(vertex);
                     string[] dirs = Directory.GetDirectories(vertex);
@@ -563,7 +630,7 @@ namespace src
                                 string newPath = s + "copy";
                                 this.addVertex(newName);
                                 predVertex.Add(newName, _vertex);
-                               
+
                                 if (string.Equals(vertex, directory))
                                 {
                                     this.addEdge(Tuple.Create(vertex, newName));
@@ -579,7 +646,7 @@ namespace src
                             {
                                 this.addVertex(_s);
                                 predVertex.Add(_s, _vertex);
-                              
+
                                 if (string.Equals(vertex, directory))
                                 {
                                     this.addEdge(Tuple.Create(vertex, _s));
@@ -591,7 +658,7 @@ namespace src
                                     this.ParentAndChildren.Add(Tuple.Create(_vertex, _s));
                                 }
                             }
-                           
+
                             if (string.Equals(vertex, directory))
                             {
                                 this.addEdge(Tuple.Create(vertex, _s));
@@ -605,9 +672,9 @@ namespace src
 
                             totalEdges++; totalNodes++;
 
-                            
+
                             searchStack.Push(s);
-                
+
                         }
                         else { continue; }
                     }
