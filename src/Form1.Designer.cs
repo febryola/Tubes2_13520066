@@ -87,7 +87,6 @@ namespace src
             this.labelOutput.Size = new System.Drawing.Size(105, 32);
             this.labelOutput.TabIndex = 13;
             this.labelOutput.Text = "Output :";
-            this.labelOutput.Click += new System.EventHandler(this.labelOutput_Click);
             // 
             // labelInputFile
             // 
@@ -118,7 +117,6 @@ namespace src
             this.checkBoxAllOcc.TabIndex = 17;
             this.checkBoxAllOcc.Text = "Find All Occurence";
             this.checkBoxAllOcc.UseVisualStyleBackColor = true;
-            this.checkBoxAllOcc.CheckedChanged += new System.EventHandler(this.checkBoxAllOcc_CheckedChanged);
             // 
             // labelMethod
             // 
@@ -142,7 +140,6 @@ namespace src
             this.radioButtonBFS.TabStop = true;
             this.radioButtonBFS.Text = "BFS";
             this.radioButtonBFS.UseVisualStyleBackColor = true;
-            this.radioButtonBFS.CheckedChanged += new System.EventHandler(this.radioButtonBFS_CheckedChanged);
             // 
             // radioButtonDFS
             // 
@@ -187,7 +184,6 @@ namespace src
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(986, 98);
             this.panelHeader.TabIndex = 22;
-            this.panelHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.panelHeader_Paint);
             // 
             // panelOutput
             // 
@@ -206,7 +202,6 @@ namespace src
             this.panelOutput.Name = "panelOutput";
             this.panelOutput.Size = new System.Drawing.Size(675, 527);
             this.panelOutput.TabIndex = 23;
-            this.panelOutput.Paint += new System.Windows.Forms.PaintEventHandler(this.panelOutput_Paint);
             // 
             // label1
             // 
@@ -228,7 +223,6 @@ namespace src
             this.richTextBox1.Size = new System.Drawing.Size(592, 50);
             this.richTextBox1.TabIndex = 29;
             this.richTextBox1.Text = "";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // pathBox
             // 
@@ -241,7 +235,6 @@ namespace src
             this.pathBox.Name = "pathBox";
             this.pathBox.Size = new System.Drawing.Size(482, 24);
             this.pathBox.TabIndex = 28;
-            this.pathBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
             // panelGraph
             // 
@@ -263,7 +256,6 @@ namespace src
             this.resultBox.Name = "resultBox";
             this.resultBox.Size = new System.Drawing.Size(482, 32);
             this.resultBox.TabIndex = 27;
-            this.resultBox.TextChanged += new System.EventHandler(this.resultBox_TextChanged);
             // 
             // labelTimeSpent
             // 
@@ -290,7 +282,6 @@ namespace src
             this.labelPathFile.Size = new System.Drawing.Size(86, 25);
             this.labelPathFile.TabIndex = 24;
             this.labelPathFile.Text = "Path File:";
-            this.labelPathFile.Click += new System.EventHandler(this.labelPathFile_Click);
             // 
             // panelInput
             // 
@@ -329,11 +320,12 @@ namespace src
             // trackBarDelay
             // 
             this.trackBarDelay.Location = new System.Drawing.Point(19, 366);
-            this.trackBarDelay.Maximum = 5000;
+            this.trackBarDelay.Minimum = 0;
+            this.trackBarDelay.Maximum = 3000;
+            this.trackBarDelay.Value = 300;
             this.trackBarDelay.Name = "trackBarDelay";
             this.trackBarDelay.Size = new System.Drawing.Size(269, 69);
             this.trackBarDelay.TabIndex = 26;
-            this.trackBarDelay.Scroll += new System.EventHandler(this.trackBarDelay_Scroll);
             // 
             // buttonRefresh
             // 
@@ -371,7 +363,6 @@ namespace src
             this.textBoxDir.Name = "textBoxDir";
             this.textBoxDir.Size = new System.Drawing.Size(230, 31);
             this.textBoxDir.TabIndex = 23;
-            this.textBoxDir.TextChanged += new System.EventHandler(this.textBoxDir_TextChanged);
             // 
             // buttonChooseFolder
             // 
@@ -410,7 +401,6 @@ namespace src
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.panelOutput.ResumeLayout(false);
             this.panelOutput.PerformLayout();
             this.panelInput.ResumeLayout(false);

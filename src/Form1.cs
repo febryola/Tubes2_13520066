@@ -13,20 +13,15 @@ namespace src
         public Form1()
         {
             InitializeComponent();
-            this.graf = new Graph(@"D:\", "RiotClientServices.exe");
+            this.graf = new Graph("", "");
         }
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
             this.Controls.Clear();
             this.InitializeComponent();
-            this.graf = new Graph(@"D:\", "RiotClientServices.exe");
+            this.graf = new Graph("", "");
             Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
         }
 
         private void buttonChooseFolder_Click(object sender, EventArgs e)
@@ -76,15 +71,27 @@ namespace src
                 else
                 {
                     List<string> resultpaths = bfs.multipleSearchBFS(textBoxDir.Text, textBoxFilename.Text);
-                    foreach (string path in resultpaths)
+                    if (resultpaths.Count == 0)
                     {
-                        LinkLabel link = new LinkLabel();
-                        link.Text = path;
-                        link.AutoSize = true;
-                        this.richTextBox1.Controls.Add(link);
-                        this.richTextBox1.AppendText("\n");
+                        LinkLabel s = new LinkLabel();
+                        s.Text = notFound;
+                        s.AutoSize = true;
+                        this.richTextBox1.Controls.Add(s);
                         this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
                     }
+                    else
+                    {
+                        foreach (string path in resultpaths)
+                        {
+                            LinkLabel link = new LinkLabel();
+                            link.Text = path;
+                            link.AutoSize = true;
+                            this.richTextBox1.Controls.Add(link);
+                            this.richTextBox1.AppendText("\n");
+                            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                        }
+                    }
+                   
                 }
 
             }
@@ -161,7 +168,6 @@ namespace src
                 // memeriksa
                 else if (!newVisited.Contains(Tuple.Create(parent, child)))
                 {
-                    // String childName = new DirectoryInfo(child).Name;
                     Microsoft.Msagl.Drawing.Node ch = graph.FindNode(child);
                     foreach (Microsoft.Msagl.Drawing.Edge e in ch.InEdges)
                     {
@@ -184,7 +190,6 @@ namespace src
                             ch = e.SourceNode;
                         }
                     }
-
                 }
 
                 bindGraph(graph);
@@ -195,70 +200,10 @@ namespace src
         void bindGraph(Microsoft.Msagl.Drawing.Graph graph)
         {
             viewer.Graph = graph;
-            // Bind viewer engine to the panel
             panelGraph.SuspendLayout();
             viewer.Dock = System.Windows.Forms.DockStyle.Fill;
             panelGraph.Controls.Add(viewer);
             panelGraph.ResumeLayout();
-        }
-        private void labelOutput_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxDir_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButtonBFS_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panelOutput_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panelHeader_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void labelPathFile_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void resultBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBoxAllOcc_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
 
         public void wait(int milliseconds)
@@ -280,16 +225,6 @@ namespace src
             {
                 Application.DoEvents();
             }
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void trackBarDelay_Scroll(object sender, EventArgs e)
-        {
-
         }
     }
 }

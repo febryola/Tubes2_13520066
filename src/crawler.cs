@@ -11,17 +11,19 @@ namespace src
 {
     internal class Graph
     {
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         private int totalNodes;
         private int totalEdges;
         private string file;
         private string dir;
-        // graph modeled as adjacency list
-        // key : vertices, value : neighbors
         private Dictionary<string, HashSet<string>> AdjacencyList = new Dictionary<string, HashSet<string>>();
         private List<Tuple<string, string>> ParentAndChildren = new List<Tuple<string, string>>();
+        public HashSet<string> visited = new HashSet<string>();
+        public HashSet<string> visitedVertex = new HashSet<string>();
+        public Dictionary<string, string> predPath = new Dictionary<string, string>();
+        public Dictionary<string, string> predVertex = new Dictionary<string, string>();
+        public HashSet<string> returnVertex = new HashSet<string>();
+        public HashSet<HashSet<string>> returnMultipleVertex = new HashSet<HashSet<string>>();
 
-        //constructor
         public Graph()
         {
             this.totalEdges = 0;
@@ -37,9 +39,29 @@ namespace src
             this.AdjacencyList = new Dictionary<string, HashSet<string>>();
             this.addVertex(dir);
         }
-        public Dictionary<string, HashSet<string>> getAdjacencyList()
+
+        public string File
         {
-            return this.AdjacencyList;
+            set
+            {
+                this.file = value;
+            }
+            get
+            {
+                return this.file;
+            }
+        }
+
+        public string Dir
+        {
+            set
+            {
+                this.dir = value;
+            }
+            get
+            {
+                return this.dir;
+            }
         }
 
         public List<Tuple<string, string>> getParentAndChildren()
@@ -60,36 +82,40 @@ namespace src
                 this.AdjacencyList[edge.Item2].Add(edge.Item1);
             }
         }
-
-
-        public string File
+        public void getPath(string root, string file)
         {
-            set
+            while (!String.Equals(root, file))
             {
-                this.file = value;
+                string _vertex = new DirectoryInfo(file).Name;
+                returnVertex.Add(_vertex);
+                file = (predPath[file]);
             }
-            get
-            {
-                return this.file;
-            }
-
+            returnVertex.Add(root);
         }
 
-        public string Dir
+        public void getMultiplePath(string root, string file)
         {
-            set
+            HashSet<string> path = new HashSet<string>();
+            while (!String.Equals(root, file))
             {
-                this.dir = value;
+                string _vertex = new DirectoryInfo(file).Name;
+                path.Add(_vertex);
+                file = (predPath[file]);
             }
-            get
-            {
-                return this.dir;
-            }
-
+            path.Add(root);
+            returnMultipleVertex.Add(path);
         }
+
+        public void addKeyPath(string key, string path)
+        {
+            this.predPath[key] = path;
+        }
+
 
         public class BFS : Graph
         {
+            public Queue<string> searchQueue = new Queue<string>();
+
             public BFS(Graph graf)
             {
                 this.AdjacencyList = graf.AdjacencyList;
@@ -108,45 +134,6 @@ namespace src
                 this.file = file;
                 this.AdjacencyList = new Dictionary<string, HashSet<string>>();
                 this.addVertex(dir);
-            }
-
-            public void addKeyPath(string key, string path)
-            {
-                this.predPath[key] = path;
-            }
-            public Queue<string> searchQueue = new Queue<string>();
-            public HashSet<string> visited = new HashSet<string>();
-            public HashSet<string> visitedVertex = new HashSet<string>();
-            public Dictionary<string, string> predPath = new Dictionary<string, string>();
-            public Dictionary<string, string> predVertex = new Dictionary<string, string>();
-            public HashSet<string> returnVertex = new HashSet<string>();
-            public HashSet<HashSet<string>> returnMultipleVertex = new HashSet<HashSet<string>>();
-            public void getPath(string root, string file)
-            {
-
-                while (!String.Equals(root, file))
-                {
-                    string _vertex = file.Replace(predPath[file], "");
-                    _vertex = _vertex.Replace("\\", "");
-                    returnVertex.Add(_vertex);
-                    file = (predPath[file]);
-                }
-                returnVertex.Add(root);
-
-            }
-
-            public void getMultiplePath(string root, string file)
-            {
-                HashSet<string> path = new HashSet<string>();
-                while (!String.Equals(root, file))
-                {
-                    string _vertex = file.Replace(predPath[file], "");
-                    _vertex = _vertex.Replace("\\", "");
-                    path.Add(_vertex);
-                    file = (predPath[file]);
-                }
-                path.Add(root);
-                returnMultipleVertex.Add(path);
             }
 
             public string singleSearchBFS(string directory, string file)
@@ -171,15 +158,14 @@ namespace src
                     }
                     else
                     {
-                        _vertex = vertex.Replace(predPath[vertex], "");
-                        _vertex = _vertex.Replace("\\", "");
+                        _vertex = new DirectoryInfo(vertex).Name;
                         visited.Add(vertex);
                         visitedVertex.Add(_vertex);
                         this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
                         if (string.Equals(_vertex, file))
                         {
                             this.getPath(directory, vertex);
-                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
+                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
                             return vertex;
 
                         }
@@ -196,10 +182,7 @@ namespace src
                     foreach (string s in allfiles)
                     {
                         predPath.Add(s, vertex);
-                        string _s = s;
-                        _s = _s.Replace(vertex, "");
-                        _s = _s.Replace("\\", "");
-                        
+                        string _s = new DirectoryInfo(s).Name;
 
                         if (!visited.Contains(s))
                         {
@@ -232,8 +215,6 @@ namespace src
 
             public List<string> multipleSearchBFS(string directory, string file)
             {
-                //string target masih harus dipisah dari dir root
-
                 addKeyPath(directory, "");
                 List<string> returnPath = new List<string>();
                 this.file = file;
@@ -252,8 +233,7 @@ namespace src
                     }
                     else
                     {
-                        _vertex = vertex.Replace(predPath[vertex], "");
-                        _vertex = _vertex.Replace("\\", "");
+                        _vertex = new DirectoryInfo(vertex).Name;
                         visited.Add(vertex);
                         visitedVertex.Add(_vertex);
                         this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
@@ -261,7 +241,7 @@ namespace src
                         if (string.Equals(_vertex, file))
                         {
                             this.getMultiplePath(directory, vertex);
-                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
+                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
                             returnPath.Add(vertex);
                         }
                     }
@@ -277,9 +257,7 @@ namespace src
                     foreach (string s in allfiles)
                     {
                         predPath.Add(s, vertex);
-                        string _s = s;
-                        _s = _s.Replace(vertex, "");
-                        _s = _s.Replace("\\", "");
+                        string _s = new DirectoryInfo(s).Name;
 
                         if (!visited.Contains(s))
                         {
@@ -312,6 +290,9 @@ namespace src
 
         public class DFS : Graph
         {
+
+            public Stack<string> searchStack = new Stack<string>();
+
             public DFS(Graph graf)
             {
                 this.AdjacencyList = graf.AdjacencyList;
@@ -332,45 +313,6 @@ namespace src
                 this.addVertex(dir);
             }
 
-            public void addKeyPath(string key, string path)
-            {
-                this.predPath[key] = path;
-            }
-
-            public Stack<string> searchStack = new Stack<string>();
-            public HashSet<string> visited = new HashSet<string>();
-            public HashSet<string> visitedVertex = new HashSet<string>();
-            public Dictionary<string, string> predPath = new Dictionary<string, string>();
-            public Dictionary<string, string> predVertex = new Dictionary<string, string>();
-            public HashSet<string> returnVertex = new HashSet<string>();
-            public HashSet<HashSet<string>> returnMultipleVertex = new HashSet<HashSet<string>>();
-            public void getPath(string root, string file)
-            {
-
-                while (!String.Equals(root, file))
-                {
-                    string _vertex = file.Replace(predPath[file], "");
-                    _vertex = _vertex.Replace("\\", "");
-                    returnVertex.Add(_vertex);
-                    file = (predPath[file]);
-                }
-                returnVertex.Add(root);
-
-            }
-
-            public void getMultiplePath(string root, string file)
-            {
-                HashSet<string> path = new HashSet<string>();
-                while (!String.Equals(root, file))
-                {
-                    string _vertex = file.Replace(predPath[file], "");
-                    _vertex = _vertex.Replace("\\", "");
-                    path.Add(_vertex);
-                    file = (predPath[file]);
-                }
-                path.Add(root);
-                returnMultipleVertex.Add(path);
-            }
 
             public string singleSearchDFS(string directory, string file)
             {
@@ -394,8 +336,7 @@ namespace src
                     }
                     else
                     {
-                        _vertex = vertex.Replace(predPath[vertex], "");
-                        _vertex = _vertex.Replace("\\", "");
+                        _vertex = new DirectoryInfo(vertex).Name;
                         visited.Add(vertex);
                         visitedVertex.Add(_vertex);
                         this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
@@ -421,10 +362,8 @@ namespace src
                     foreach (string s in allfiles)
                     {
                         predPath.Add(s, vertex);
-                        string _s = s;
-                        _s = _s.Replace(vertex, "");
-                        _s = _s.Replace("\\", "");
-                      
+                        string _s = new DirectoryInfo(s).Name;
+
                         if (!visited.Contains(s))
                         {
                             this.addVertex(_s);
@@ -471,9 +410,8 @@ namespace src
                     }
                     else
                     {
-                        _vertex = vertex.Replace(predPath[vertex], "");
-                        _vertex = _vertex.Replace("\\", "");
-                        
+                        _vertex = new DirectoryInfo(vertex).Name;
+
                         this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
 
                         if (string.Equals(_vertex, file))
@@ -497,9 +435,8 @@ namespace src
                     foreach (string s in allfiles)
                     {
                         predPath.Add(s, vertex);
-                        string _s = s;
-                        _s = _s.Replace(vertex, "");
-                        _s = _s.Replace("\\", "");
+                        string _s = new DirectoryInfo(s).Name;
+
                         if (!visited.Contains(s))
                         {
                             this.addVertex(_s);
