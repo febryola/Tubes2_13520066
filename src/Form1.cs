@@ -60,11 +60,8 @@ namespace src
                     }
                     else
                     {
-                        LinkLabel s = new LinkLabel();
-                        s.Text = notFound;
-                        s.AutoSize = true;
-                        this.richTextBox1.Controls.Add(s);
-                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                        string s = notFound;
+                        this.richTextBox1.AppendText(s);
                     }
                     
                 }
@@ -73,11 +70,19 @@ namespace src
                     List<string> resultpaths = bfs.multipleSearchBFS(textBoxDir.Text, textBoxFilename.Text);
                     if (resultpaths.Count == 0)
                     {
-                        LinkLabel s = new LinkLabel();
-                        s.Text = notFound;
-                        s.AutoSize = true;
-                        this.richTextBox1.Controls.Add(s);
-                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                        string s = notFound;
+                        this.richTextBox1.AppendText(s);
+                    }
+                    else if (resultpaths.Count == 1)
+                    {
+                        foreach (string path in resultpaths)
+                        {
+                            LinkLabel link = new LinkLabel();
+                            link.Text = path;
+                            link.AutoSize = true;
+                            this.richTextBox1.Controls.Add(link);
+                            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                        }
                     }
                     else
                     {
@@ -102,35 +107,54 @@ namespace src
                 if (!checkBoxAllOcc.Checked)
                 {
                     string resultpath = dfs.singleSearchDFS(this.graf.Dir, this.graf.File);
-                    if (resultpath != this.graf.Dir)
+                    if(resultpath != this.graf.Dir)
                     {
                         LinkLabel link = new LinkLabel();
                         link.Text = resultpath;
                         link.AutoSize = true;
                         this.richTextBox1.Controls.Add(link);
                         this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+
                     }
                     else
                     {
-                        LinkLabel s = new LinkLabel();
-                        s.Text = notFound;
-                        s.AutoSize = true;
-                        this.richTextBox1.Controls.Add(s);
-                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                        string s = notFound;
+                        this.richTextBox1.AppendText(s);
                     }
+                    
                 }
                 else
                 {
                     List<string> resultpaths = dfs.multipleSearchDFS(textBoxDir.Text, textBoxFilename.Text);
-                    foreach (string path in resultpaths)
+                    if (resultpaths.Count == 0)
                     {
-                        LinkLabel link = new LinkLabel();
-                        link.Text = path;
-                        link.AutoSize = true;
-                        this.richTextBox1.Controls.Add(link);
-                        this.richTextBox1.AppendText("\n");
-                        this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                        string s = notFound;
+                        this.richTextBox1.AppendText(s);
                     }
+                    else if (resultpaths.Count == 1)
+                    {
+                        foreach (string path in resultpaths)
+                        {
+                            LinkLabel link = new LinkLabel();
+                            link.Text = path;
+                            link.AutoSize = true;
+                            this.richTextBox1.Controls.Add(link);
+                            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                        }
+                    }
+                    else
+                    {
+                        foreach (string path in resultpaths)
+                        {
+                            LinkLabel link = new LinkLabel();
+                            link.Text = path;
+                            link.AutoSize = true;
+                            this.richTextBox1.Controls.Add(link);
+                            this.richTextBox1.AppendText("\n");
+                            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+                        }
+                    }
+                   
                 }
 
             }
