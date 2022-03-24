@@ -243,8 +243,12 @@ namespace src
             link.AutoSize = true;
             this.richTextBox1.Controls.Add(link);
             this.richTextBox1.AppendText("\n");
+            int index = richTextBox1.Text.Length;
+            Point position = richTextBox1.GetPositionFromCharIndex(index);
+            link.Location = position;
             this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
             link.LinkClicked += Link_LinkClicked1;
+            this.richTextBox1.ScrollToCaret();
         }
 
         private void Link_LinkClicked1(object sender, LinkLabelLinkClickedEventArgs e)
