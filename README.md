@@ -20,12 +20,15 @@ Tugas Besar 2 IF2211 Strategi Algoritma Semester II Tahun 2021/2022 Oleh WhyNotS
 
 ## General Information
 Dalam tugas besar 2 IF2211 Strategi Algoritma Tahun 2021/2022 Semester 2 ini, Anda akan diminta untuk membangun sebuah aplikasi GUI sederhana yang dapat melakukan pencarian file atau folder tanpa menggunakan fitur search yang telah tersedia di file explorer. Dengan memanfaatkan algoritma Breadth First Search (BFS) dan Depth First Search (DFS), Anda dapat menelusuri setiap file dan folder yang ada di directori yang dapat menampilkan satu atau lebih file atau folder berdasarkan inputan yang Anda berikan.
+
 ## Requirement
 * C#
 * Visual Studio 2019
+
 ## Setup
 *	Install Visual Studio 2022 atau versi sebelumnya
 *	Create project Desktop app
+
 ## How to Use Program
 1.	Jalankan executable code (src.exe) pada folder bin
 2.	Browse dan pilih file/folder yang ingin dilakukan pencarian 
@@ -44,8 +47,10 @@ Dalam tugas besar 2 IF2211 Strategi Algoritma Tahun 2021/2022 Semester 2 ini, An
 
 * Setelah dilakukan Pencarian
 <img src="doc/pencarian.jpg" />
+
 ## Status
 Project is: _finished_
+
 ## Contact
 This program was made by WhyNotSearch
 1. Putri Nurhaliza (13520066).
