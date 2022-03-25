@@ -147,6 +147,7 @@ namespace src
             List<Tuple<string, string>> newVisited = new List<Tuple<string, string>>();
             graph = new Microsoft.Msagl.Drawing.Graph("graph");
             List<Tuple<string, string>> ParentAndChildren = graf.getParentAndChildren();
+
             foreach (Tuple<string, string> parentChild in ParentAndChildren)
             {
                 string parent = parentChild.Item1;
@@ -156,9 +157,15 @@ namespace src
                 if (!newAdjlist.Contains(Tuple.Create(parent, child)))
                 {
                     graph.AddEdge(parent, child);
+                    Microsoft.Msagl.Drawing.Node pr = graph.FindNode(parent);
                     if (!String.Equals(parent, this.graf.Dir))
                     {
-                        graph.FindNode(parent).LabelText = new DirectoryInfo(parent).Name;
+                        pr.LabelText = new DirectoryInfo(parent).Name;
+                    }
+                    else
+                    {
+                        pr.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                        pr.Label.FontColor = Microsoft.Msagl.Drawing.Color.Red;
                     }
                     graph.FindNode(child).LabelText = new DirectoryInfo(child).Name;
 
@@ -172,6 +179,8 @@ namespace src
                     {
                         e.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
                     }
+                    ch.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                    ch.Label.FontColor = Microsoft.Msagl.Drawing.Color.Red;
                     newVisited.Add(Tuple.Create(parent, child));
 
                 }
@@ -179,13 +188,18 @@ namespace src
                 else
                 {
                     Microsoft.Msagl.Drawing.Node ch = graph.FindNode(child);
+                    Microsoft.Msagl.Drawing.Node pr = graph.FindNode(parent);
                     Microsoft.Msagl.Drawing.Node root = graph.FindNode(this.graf.Dir);
 
+                    root.Attr.Color = Microsoft.Msagl.Drawing.Color.Blue;
+                    root.Label.FontColor = Microsoft.Msagl.Drawing.Color.Blue;
                     while (ch != root)
                     {
                         foreach (Microsoft.Msagl.Drawing.Edge e in ch.InEdges)
                         {
                             e.Attr.Color = Microsoft.Msagl.Drawing.Color.Blue;
+                            ch.Attr.Color = Microsoft.Msagl.Drawing.Color.Blue;
+                            ch.Label.FontColor = Microsoft.Msagl.Drawing.Color.Blue;
                             ch = e.SourceNode;
                         }
                     }

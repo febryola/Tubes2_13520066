@@ -320,12 +320,11 @@ namespace src
             // trackBarDelay
             // 
             this.trackBarDelay.Location = new System.Drawing.Point(19, 366);
-            this.trackBarDelay.Minimum = 0;
             this.trackBarDelay.Maximum = 3000;
-            this.trackBarDelay.Value = 300;
             this.trackBarDelay.Name = "trackBarDelay";
             this.trackBarDelay.Size = new System.Drawing.Size(269, 69);
             this.trackBarDelay.TabIndex = 26;
+            this.trackBarDelay.Value = 300;
             // 
             // buttonRefresh
             // 
