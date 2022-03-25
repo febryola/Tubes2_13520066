@@ -24,12 +24,14 @@ namespace src
         public HashSet<string> returnVertex = new HashSet<string>();
         public HashSet<HashSet<string>> returnMultipleVertex = new HashSet<HashSet<string>>();
 
+        // default konstruktor
         public Graph()
         {
             this.totalEdges = 0;
             this.totalNodes = 0;
         }
 
+        // konstruktor dengan parameter dir dan file yang akan dicari
         public Graph(string dir, string file)
         {
             this.file = file;
@@ -69,11 +71,13 @@ namespace src
             return this.ParentAndChildren;
         }
 
+        // menambahkan simpul baru ke adjacencyList dengan tetangganya masih kosong
         public void addVertex(string vertex)
         {
             this.AdjacencyList[vertex] = new HashSet<string>();
         }
 
+        // menambahkan tetangga ke simpul yang sudah ada
         public void addEdge(Tuple<string, string> edge)
         {
             if (this.AdjacencyList.ContainsKey(edge.Item1) && this.AdjacencyList.ContainsKey(edge.Item2))
@@ -82,6 +86,8 @@ namespace src
                 this.AdjacencyList[edge.Item2].Add(edge.Item1);
             }
         }
+
+        // mendapatkan path hasil pencarian (hanya 1)
         public void getPath(string root, string file)
         {
             while (!String.Equals(root, file))
@@ -93,6 +99,7 @@ namespace src
             returnVertex.Add(root);
         }
 
+        // mendapatkan path hasil pencarian(semua)
         public void getMultiplePath(string root, string file)
         {
             HashSet<string> path = new HashSet<string>();
@@ -106,6 +113,7 @@ namespace src
             returnMultipleVertex.Add(path);
         }
 
+        // menambahkan key dan value baru ke predPath
         public void addKeyPath(string key, string path)
         {
             this.predPath[key] = path;
@@ -114,8 +122,10 @@ namespace src
 
         public class BFS : Graph
         {
+            // Antrian (queue) simpul-simpul yang dibangkitkan dan diperiksa
             public Queue<string> searchQueue = new Queue<string>();
 
+            // konstruktor
             public BFS(Graph graf)
             {
                 this.AdjacencyList = graf.AdjacencyList;
@@ -126,6 +136,7 @@ namespace src
                 this.ParentAndChildren = graf.ParentAndChildren;
             }
 
+            // konstruktor
             public BFS(string root, string file)
             {
                 this.totalEdges = 0;
@@ -136,6 +147,7 @@ namespace src
                 this.addVertex(dir);
             }
 
+            // fungsi utama untuk pencarian 1 file yang sesuai secara BFS
             public string singleSearchBFS(string directory, string file)
             {
 
@@ -145,12 +157,13 @@ namespace src
                 this.file = file;
                 visited.Add(directory);
                 visitedVertex.Add(directory);
-                //first iteration
+                // iterasi pertama
                 searchQueue.Enqueue(directory);
 
+                // pencarian dilakukan selama masih ada node dalam queue
                 while (searchQueue.Count != 0)
                 {
-                    string vertex = searchQueue.Dequeue();
+                    string vertex = searchQueue.Dequeue();      // didequeue untuk diperiksa
                     string _vertex = " ";
                     if (string.Equals(vertex, directory))
                     {
@@ -164,6 +177,7 @@ namespace src
                         this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
                         if (string.Equals(_vertex, file))
                         {
+                            // file yang sesuai ditemukan
                             this.getPath(directory, vertex);
                             this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
                             return vertex;
@@ -212,7 +226,7 @@ namespace src
                 return returnPath;
             }
 
-
+            // fungsi utama untuk pencarian semua file yang sesuai secara BFS
             public List<string> multipleSearchBFS(string directory, string file)
             {
                 addKeyPath(directory, "");
@@ -220,12 +234,14 @@ namespace src
                 this.file = file;
                 visited.Add(directory);
                 visitedVertex.Add(directory);
-                //first iteration
+                
+                // iterasi pertama
                 searchQueue.Enqueue(directory);
 
+                // pencarian dilakukan selama masih ada node dalam queue
                 while (searchQueue.Count != 0)
                 {
-                    string vertex = searchQueue.Dequeue();
+                    string vertex = searchQueue.Dequeue();              // didequeue untuk diperiksa
                     string _vertex = " ";
                     if (string.Equals(vertex, directory))
                     {
@@ -240,6 +256,7 @@ namespace src
 
                         if (string.Equals(_vertex, file))
                         {
+                            // 
                             this.getMultiplePath(directory, vertex);
                             this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
                             returnPath.Add(vertex);
@@ -313,7 +330,7 @@ namespace src
                 this.addVertex(dir);
             }
 
-
+            // fungsi utama untuk pencarian 1 file yang sesuai secara DFS 
             public string singleSearchDFS(string directory, string file)
             {
                 addKeyPath(directory, "");
@@ -323,12 +340,13 @@ namespace src
                 visited.Add(directory);
                 visitedVertex.Add(directory);
 
-                //first iteration
+                // iterasi pertama
                 searchStack.Push(directory);
 
+                // pencarian dilakukan selama masih ada node dalam stack
                 while (searchStack.Count != 0)
                 {
-                    string vertex = searchStack.Pop();
+                    string vertex = searchStack.Pop();          // dipop untuk diperiksa
                     string _vertex = " ";
                     if (string.Equals(vertex, directory))
                     {
@@ -342,8 +360,9 @@ namespace src
                         this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
                         if (string.Equals(_vertex, file))
                         {
+                            // file yang sesuai ditemukan
                             this.getPath(directory, vertex);
-                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
+                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
                             return vertex;
 
                         }
@@ -389,6 +408,7 @@ namespace src
                 return returnPath;
             }
 
+            // fungsi utama untuk pencarian semua file yang sesuai secara DFS 
             public List<string> multipleSearchDFS(string directory, string file)
             {
                 addKeyPath(directory, "");
@@ -397,12 +417,13 @@ namespace src
                 visited.Add(directory);
                 visitedVertex.Add(directory);
 
-                //first iteration
+                // iterasi pertama
                 searchStack.Push(directory);
 
+                // pencarian dilakukan selama masih ada node dalam stack
                 while (searchStack.Count != 0)
                 {
-                    string vertex = searchStack.Pop();
+                    string vertex = searchStack.Pop();              // dipop untuk diperiksa
                     string _vertex = " ";
                     if (string.Equals(vertex, directory))
                     {
@@ -416,8 +437,9 @@ namespace src
 
                         if (string.Equals(_vertex, file))
                         {
+                            // file yang sesuai ditemukan
                             this.getMultiplePath(directory, vertex);
-                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));   // ini result
+                            this.ParentAndChildren.Add(Tuple.Create(predPath[vertex], vertex));
                             returnPath.Add(vertex);
                         }
                     }

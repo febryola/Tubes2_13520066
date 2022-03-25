@@ -196,7 +196,7 @@ namespace src
             }
         }
 
-        void bindGraph(Microsoft.Msagl.Drawing.Graph graph)
+        private void bindGraph(Microsoft.Msagl.Drawing.Graph graph)
         {
             viewer.Graph = graph;
             panelGraph.SuspendLayout();
@@ -298,11 +298,8 @@ namespace src
                         string folder = Path.GetDirectoryName(path);
                         System.Diagnostics.Process.Start("explorer.exe", folder);
                     }
-                    
-
                 }
             }
-            
         }
     }
 }
